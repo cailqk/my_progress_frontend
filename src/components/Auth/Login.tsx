@@ -1,55 +1,68 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { logActions } from "../../store/user-slice";
+import { useDispatch } from "react-redux";
+
 import * as api from "../../requests/API";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (email === "" || pass === "") {
+    if (email === "" || password === "") {
       return window.alert("Please fill all the fields!");
     }
-    await api.post("auth", {
+
+    const token = await api.post("auth", {
       email: email,
-      password: pass,
+      password: password,
     });
 
-    setEmail("");
-    setPass("");
+    localStorage.setItem("token", token["access_token"]);
+    dispatch(logActions.toggle())
+    navigate("/");
   };
 
   return (
     <div className="row">
       <div className="col-md-5 offset-md-3">
         <form onSubmit={submitHandler}>
-          <div className="form-group">
-            <label htmlFor="exampleInputEmail1">Email address</label>
+        <div className="mb-3">
+            <label htmlFor="emailInput" className="form-label">
+              Email address
+            </label>
             <input
               type="email"
               className="form-control"
-              id="exampleInputEmail1"
+              id="emailInput"
               aria-describedby="emailHelp"
-              placeholder="Enter email"
-              onChange={(e: any) => setEmail(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="exampleInputPassword1">Password</label>
+          <div className="mb-3">
+            <label htmlFor="passwordInput" className="form-label">
+              Password
+            </label>
             <input
               type="password"
               className="form-control"
-              id="exampleInputPassword1"
-              placeholder="******"
-              onChange={(e: any) => setPass(e.target.value)}
+              id="passwordInput"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+          <div className="d-flex justify-content-between align-items-center">
           <button type="submit" className="btn btn-primary">
-            Submit
+            Log in
           </button>
-          <div>
-            <a>Don't have an account ?</a>
+            <a style={{cursor:'pointer'}}>Don't have an account ?</a>
           </div>
         </form>
       </div>

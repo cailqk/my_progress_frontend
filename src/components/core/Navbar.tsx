@@ -1,26 +1,44 @@
-import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logActions } from "../../store/user-slice";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logged = useSelector((state: any) => state.user.loggedIn);
+
+  const logoutHandler = () => {
+    dispatch(logActions.logout());
+    navigate("/login");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
-          <li className="nav-item active">
-            <NavLink className="nav-link" to="/">
-              Home <span className="sr-only"></span>
+      <div className="d-flex">
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <NavLink className="nav-link active" to="/">
+              Home
             </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/login">
-              Login
-            </NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink className="nav-link" to="/register">
-              Register
-            </NavLink>
-          </li>
-        </ul>
+            {logged && (
+              <div className="navbar-nav position-absolute end-0">
+                <a href="" className="nav-link" onClick={logoutHandler}>
+                  Logout
+                </a>
+              </div>
+            )}
+            {!logged && (
+              <div className="navbar-nav position-absolute end-0">
+                <NavLink className="nav-link" to="/login">
+                  Login
+                </NavLink>
+                <NavLink className="nav-link" to="/register">
+                  Register
+                </NavLink>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </nav>
   );
