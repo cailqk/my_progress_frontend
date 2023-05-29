@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { logActions } from "../../store/user-slice";
 import { useDispatch } from "react-redux";
 
 import * as api from "../../requests/API";
-
+import Error from "../core/Error";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,7 +17,8 @@ const Login = () => {
     e.preventDefault();
 
     if (email === "" || password === "") {
-      return window.alert("Please fill all the fields!");
+      setShow(true);
+      return;
     }
 
     const token = await api.post("auth", {
@@ -24,16 +26,25 @@ const Login = () => {
       password: password,
     });
 
+    if (token.statusCode !== 200) {
+      setPassword("");
+      setShow(true);
+      return;
+    }
+
     localStorage.setItem("token", token["access_token"]);
-    dispatch(logActions.toggle())
+    dispatch(logActions.toggle());
     navigate("/");
   };
 
   return (
-    <div className="row">
+    <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
+        <div className={show === true ? "mb-5 visible" : "invisible"}>
+          <Error error={"Incorrect data!"} />
+        </div>
         <form onSubmit={submitHandler}>
-        <div className="mb-3">
+          <div className="mb-3">
             <label htmlFor="emailInput" className="form-label">
               Email address
             </label>
@@ -43,6 +54,7 @@ const Login = () => {
               id="emailInput"
               aria-describedby="emailHelp"
               value={email}
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -55,14 +67,17 @@ const Login = () => {
               className="form-control"
               id="passwordInput"
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="d-flex justify-content-between align-items-center">
-          <button type="submit" className="btn btn-primary">
-            Log in
-          </button>
-            <a style={{cursor:'pointer'}}>Don't have an account ?</a>
+            <button type="submit" className="btn btn-primary">
+              Log in
+            </button>
+            <NavLink style={{ cursor: "pointer" }} to="/register">
+              Don't have an account ?
+            </NavLink>
           </div>
         </form>
       </div>

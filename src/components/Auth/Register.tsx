@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
+import Error from "../core/Error";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -9,6 +10,8 @@ const Register = () => {
   const [gender, setGender] = useState("");
   const [date, setDate] = useState("");
   const [height, setHeight] = useState("");
+  const [show, setShow] = useState(false);
+  const [err, setErr] = useState("");
 
   const navigate = useNavigate();
 
@@ -23,7 +26,8 @@ const Register = () => {
       date == "" ||
       height == ""
     ) {
-      window.alert("Please fill all the fields");
+      setShow(true);
+      return;
     }
 
     const user = {
@@ -36,14 +40,27 @@ const Register = () => {
     };
 
     await api.post("users", user).then((res) => {
-      console.log(res);
+      if (res.statusCode !== 200) {
+        console.log(res);
+        setShow(true);
+        if (Array.isArray(res.message)) {
+          res.message.forEach((el: string) => {
+            setErr(el + "\n");
+          });
+        }
+        setErr(res.message);
+        return err;
+      }
       navigate("/login");
     });
   };
 
   return (
-    <div className="row">
+    <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
+        <div className={show === true ? "mb-5 visible" : "invisible"}>
+          <Error error={err} />
+        </div>
         <form onSubmit={submitHandler}>
           <div className="mb-3">
             <label htmlFor="nameInput" className="form-label">
@@ -54,6 +71,7 @@ const Register = () => {
               className="form-control"
               id="nameInput"
               value={name}
+              required
               onChange={(e) => setName(e.target.value)}
             />
           </div>
@@ -67,6 +85,7 @@ const Register = () => {
               id="emailInput"
               aria-describedby="emailHelp"
               value={email}
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -79,6 +98,7 @@ const Register = () => {
               className="form-control"
               id="passwordInput"
               value={password}
+              required
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -90,6 +110,7 @@ const Register = () => {
               className="form-control"
               name="gender"
               id="gender"
+              required
               onChange={(e) => setGender(e.target.value)}
             >
               <option value=""></option>
@@ -107,6 +128,7 @@ const Register = () => {
               id="dateInput"
               aria-describedby="emailHelp"
               value={date}
+              required
               onChange={(e) => setDate(e.target.value)}
             />
           </div>
@@ -120,6 +142,7 @@ const Register = () => {
               id="heightInput"
               aria-describedby="emailHelp"
               value={height}
+              required
               onChange={(e) => setHeight(e.target.value)}
             />
           </div>
@@ -127,7 +150,9 @@ const Register = () => {
             <button type="submit" className="btn btn-primary">
               Register
             </button>
-            <a>Already have an account ?</a>
+            <NavLink style={{ cursor: "pointer" }} to="/login">
+              Already have an account ?
+            </NavLink>
           </div>
         </form>
       </div>

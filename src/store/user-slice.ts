@@ -14,6 +14,5 @@ const logSlice = createSlice({
   },
 });
 
-
 export const logActions = logSlice.actions;
 export default logSlice;

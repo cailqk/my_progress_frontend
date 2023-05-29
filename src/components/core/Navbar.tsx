@@ -1,11 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
 import { logActions } from "../../store/user-slice";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logged = useSelector((state: any) => state.user.loggedIn);
+  const logged = useSelector((state: RootState) => state.user.loggedIn);
 
   const logoutHandler = () => {
     dispatch(logActions.logout());
@@ -22,7 +23,7 @@ const Navbar = () => {
             </NavLink>
             {logged && (
               <div className="navbar-nav position-absolute end-0">
-                <a href="" className="nav-link" onClick={logoutHandler}>
+                <a className="nav-link" onClick={logoutHandler}>
                   Logout
                 </a>
               </div>
