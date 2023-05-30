@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Navbar, Spinner } from "./components/core";
+import { Profile } from "./components/user";
 
 const Home = React.lazy(() => import("./components/core/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -33,6 +34,14 @@ function App() {
             element={
               <React.Suspense fallback={<Spinner />}>
                 <Register />
+              </React.Suspense>
+            }
+          ></Route>
+          <Route
+            path="/profile"
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <Profile />
               </React.Suspense>
             }
           ></Route>

@@ -26,10 +26,12 @@ const Login = () => {
       password,
     });
 
-    if (token.statusCode === 400) {
-      setPassword("");
-      setErrorMessage(true);
-      return;
+    if (token.statusCode) {
+      if (token.statusCode !== 200) {
+        setPassword("");
+        setErrorMessage(true);
+        return;
+      }
     }
 
     localStorage.setItem("token", token["access_token"]);
