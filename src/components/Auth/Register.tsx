@@ -1,17 +1,16 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
-import Error from "../core/Error";
+import { Error } from "../core";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
-  const [date, setDate] = useState("");
-  const [height, setHeight] = useState("");
-  const [show, setShow] = useState(false);
-  const [err, setErr] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [height, setHeight] = useState<number>(0);
+  const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
 
@@ -19,37 +18,29 @@ const Register = () => {
     e.preventDefault();
 
     if (
-      name == "" ||
-      email == "" ||
-      password == "" ||
-      gender == "" ||
-      date == "" ||
-      height == ""
+      name === "" ||
+      email === "" ||
+      password === "" ||
+      gender === "" ||
+      dateOfBirth === "" ||
+      height === 0
     ) {
-      setShow(true);
       return;
     }
 
     const user = {
-      name: name,
-      email: email,
-      password: password,
-      gender: gender,
-      dateOfBirth: date,
-      height: Number(height),
+      name,
+      email,
+      password,
+      gender,
+      dateOfBirth,
+      height,
     };
 
     await api.post("users", user).then((res) => {
-      if (res.statusCode !== 200) {
-        console.log(res);
-        setShow(true);
-        if (Array.isArray(res.message)) {
-          res.message.forEach((el: string) => {
-            setErr(el + "\n");
-          });
-        }
-        setErr(res.message);
-        return err;
+      if (res.statusCode === 400) {
+        setErrors(res.message);
+        return;
       }
       navigate("/login");
     });
@@ -58,9 +49,7 @@ const Register = () => {
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
-        <div className={show === true ? "mb-5 visible" : "invisible"}>
-          <Error error={err} />
-        </div>
+        {errors.length > 0 && <Error error={errors} />}
         <form onSubmit={submitHandler}>
           <div className="mb-3">
             <label htmlFor="nameInput" className="form-label">
@@ -127,9 +116,9 @@ const Register = () => {
               className="form-control"
               id="dateInput"
               aria-describedby="emailHelp"
-              value={date}
+              value={dateOfBirth}
               required
-              onChange={(e) => setDate(e.target.value)}
+              onChange={(e) => setDateOfBirth(e.target.value)}
             />
           </div>
           <div className="mb-3">
@@ -143,7 +132,7 @@ const Register = () => {
               aria-describedby="emailHelp"
               value={height}
               required
-              onChange={(e) => setHeight(e.target.value)}
+              onChange={(e) => setHeight(Number(e.target.value))}
             />
           </div>
           <div className="d-flex justify-content-between align-items-center">

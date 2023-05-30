@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logActions } from "../../store/user-slice";
 import { useDispatch } from "react-redux";
-
+import { logActions } from "../../store/user-slice";
 import * as api from "../../requests/API";
-import Error from "../core/Error";
+import { Error } from "../core";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [show, setShow] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,18 +17,18 @@ const Login = () => {
     e.preventDefault();
 
     if (email === "" || password === "") {
-      setShow(true);
+      setErrorMessage(true);
       return;
     }
 
     const token = await api.post("auth", {
-      email: email,
-      password: password,
+      email,
+      password,
     });
 
-    if (token.statusCode !== 200) {
+    if (token.statusCode === 400) {
       setPassword("");
-      setShow(true);
+      setErrorMessage(true);
       return;
     }
 
@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
-        <div className={show === true ? "mb-5 visible" : "invisible"}>
+        <div className={errorMessage ? "mb-5 visible" : "invisible"}>
           <Error error={"Incorrect data!"} />
         </div>
         <form onSubmit={submitHandler}>

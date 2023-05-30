@@ -1,8 +1,10 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "./components/core/Home";
-import Navbar from "./components/core/Navbar";
-import Login from "./components/Auth/Login";
-import Register from "./components/Auth/Register";
+import { Navbar, Spinner } from "./components/core";
+
+const Home = React.lazy(() => import("./components/core/Home"));
+const Login = React.lazy(() => import("./components/Auth/Login"));
+const Register = React.lazy(() => import("./components/Auth/Register"));
 
 function App() {
   return (
@@ -10,9 +12,30 @@ function App() {
       <Navbar />
       <div className="container">
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
+          <Route
+            path="/"
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <Home />
+              </React.Suspense>
+            }
+          ></Route>
+          <Route
+            path="/login"
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <Login />
+              </React.Suspense>
+            }
+          ></Route>
+          <Route
+            path="/register"
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <Register />
+              </React.Suspense>
+            }
+          ></Route>
         </Routes>
       </div>
     </>
