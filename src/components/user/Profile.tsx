@@ -3,10 +3,12 @@ import { dateParser } from "../../shared/dateParser";
 import * as api from "../../requests/API";
 import { User } from "../../shared/interfaces";
 import { Error } from "../core";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);
   const [errors, setErrors] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     api.get("users/single").then((res) => {
@@ -16,25 +18,67 @@ const Profile = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //TODO place a dialog here asking if the changes should be sent
+    //TODO create a modal here asking if the changes should be set
 
-    api.patch(`users/${user._id}`, { ...user }).then((res) => {
-      if (res.statusCode === 400) {
-        setErrors(res.message);
-        setUser({...user});
-        return;
-      }
-      return res;
-    });
+    if(confirm('Are you sure?')) {
 
-    return;
-  };
-
-  return (
-    <div className="row mt-5">
+      const updated = {
+        name: user.name,
+        gender: user.gender,
+        dateOfBirth: user.dateOfBirth,
+        height: user.height,
+      };
+      
+      api.patch(`users/${user._id}`, { ...updated }).then((res) => {
+        if (res.statusCode === 400) {
+          setErrors(res.message);
+          r
+        }
+        
+        setUser({ ...user });
+        navigate("/");
+      });
+    }
+    };
+    
+    return (
+      <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
         {errors.length > 0 && <Error error={errors} />}
         <form onSubmit={submitHandler}>
+        <div className="mb-3">
+            <label htmlFor="emailInput" className="form-label">
+              Email address
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="emailInput"
+              value={user.email}
+              readOnly
+              disabled
+              // onChange={(e) => {
+              //   setUser({
+              //     ...user,
+              //     email: e.target.value,
+              //   });
+              // }}
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="roleInput" className="form-label">
+              Role
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="roleInput"
+              value={user.role}
+              readOnly
+              disabled
+            />
+          </div>
+          <hr></hr>
           <div className="mb-3">
             <label htmlFor="nameInput" className="form-label">
               Name
@@ -53,53 +97,24 @@ const Profile = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="emailInput" className="form-label">
-              Email address
-            </label>
-            <input
-              type="email"
-              className="form-control"
-              id="emailInput"
-              value={user.email}
-              required
-              onChange={(e) => {
-                setUser({
-                  ...user,
-                  email: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="roleInput" className="form-label">
-              Role
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="roleInput"
-              value={user.role}
-              required
-              readOnly
-            />
-          </div>
-          <div className="mb-3">
             <label htmlFor="genderInput" className="form-label">
               Gender
             </label>
-            <input
-              type="text"
+            <select
               className="form-control"
-              id="genderInput"
+              name="gender"
+              id="gender"
               value={user.gender}
-              required
-              onChange={(e) => {
+              onChange={(e) =>
                 setUser({
                   ...user,
                   gender: e.target.value,
-                });
-              }}
-            />
+                })
+              }
+            >
+              <option value="male">male</option>
+              <option value="female">female</option>
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="dateOfBirthInput" className="form-label">
@@ -110,7 +125,6 @@ const Profile = () => {
               className="form-control"
               id="dateOfBirthInput"
               value={dateParser(user.dateOfBirth)}
-              required
               onChange={(e) => {
                 setUser({
                   ...user,
@@ -128,7 +142,6 @@ const Profile = () => {
               className="form-control"
               id="heightInput"
               value={user.height}
-              required
               onChange={(e) => {
                 setUser({
                   ...user,
