@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { dateParser } from "../../shared/dateParser";
 import * as api from "../../requests/API";
 import { User } from "../../shared/interfaces";
 import { Error } from "../core";
-import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);
@@ -18,35 +18,34 @@ const Profile = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //TODO create a modal here asking if the changes should be set
 
-    if(confirm('Are you sure?')) {
-
+    if (window.confirm("Keep the changes ?")) {
+      
       const updated = {
         name: user.name,
         gender: user.gender,
         dateOfBirth: user.dateOfBirth,
         height: user.height,
       };
-      
+
       api.patch(`users/${user._id}`, { ...updated }).then((res) => {
         if (res.statusCode === 400) {
           setErrors(res.message);
-          r
+          return;
         }
-        
+
         setUser({ ...user });
         navigate("/");
       });
     }
-    };
-    
-    return (
-      <div className="row mt-5">
+  };
+
+  return (
+    <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
         {errors.length > 0 && <Error error={errors} />}
         <form onSubmit={submitHandler}>
-        <div className="mb-3">
+          <div className="mb-3">
             <label htmlFor="emailInput" className="form-label">
               Email address
             </label>
@@ -57,12 +56,6 @@ const Profile = () => {
               value={user.email}
               readOnly
               disabled
-              // onChange={(e) => {
-              //   setUser({
-              //     ...user,
-              //     email: e.target.value,
-              //   });
-              // }}
             />
           </div>
           <div className="mb-3">
@@ -150,7 +143,7 @@ const Profile = () => {
               }}
             />
           </div>
-          <button type="submit" className="btn btn-success">
+          <button type="submit" className="btn btn-outline-dark">
             Edit
           </button>
         </form>
