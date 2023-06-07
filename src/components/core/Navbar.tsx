@@ -23,6 +23,9 @@ const Navbar = () => {
             </NavLink>
             {logged && (
               <div className="navbar-nav position-absolute end-0">
+                <NavLink className="nav-link" to="/measurements">
+                  Measurements
+                </NavLink>
                 <a className="nav-link" onClick={logoutHandler}>
                   Logout
                 </a>
