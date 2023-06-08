@@ -12,12 +12,6 @@ const Profile = () => {
   const [enableEdit, setEnableEdit] = useState(false);
   const navigate = useNavigate();
 
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    navigate(RoutesEnum.login);
-  }
-
   useEffect(() => {
     api.get("users/single").then((res) => {
       setUser(res);
@@ -127,6 +121,8 @@ const Profile = () => {
               className="form-control"
               id="dateOfBirthInput"
               value={dateParser(user.dateOfBirth)}
+              min={dateParser(new Date(1926, 0, 1))}
+              max={dateParser(new Date())}
               onChange={(e) => {
                 editValue("dateOfBirth", new Date(e.target.value));
               }}
@@ -141,6 +137,8 @@ const Profile = () => {
               className="form-control"
               id="heightInput"
               value={user.height}
+              min={110}
+              max={230}
               onChange={(e) => {
                 editValue("height", Number(e.target.value));
               }}

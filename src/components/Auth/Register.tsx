@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
 import { RoutesEnum } from "../../shared/utils/enums";
 import Error from "../../shared/Error";
+import { dateParser } from "../../shared/utils/dateParser";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -10,7 +11,7 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [height, setHeight] = useState<number>(0);
+  const [height, setHeight] = useState<number>(110);
   const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
@@ -118,6 +119,8 @@ const Register = () => {
               id="dateInput"
               aria-describedby="emailHelp"
               value={dateOfBirth}
+              min={dateParser(new Date(1926, 0, 1))}
+              max={dateParser(new Date())}
               required
               onChange={(e) => setDateOfBirth(e.target.value)}
             />
@@ -132,6 +135,8 @@ const Register = () => {
               id="heightInput"
               aria-describedby="emailHelp"
               value={height}
+              min={110}
+              max={230}
               required
               onChange={(e) => setHeight(Number(e.target.value))}
             />
@@ -140,9 +145,7 @@ const Register = () => {
             <button type="submit" className="btn btn-primary">
               Register
             </button>
-            <NavLink to={RoutesEnum.login}>
-              Already have an account ?
-            </NavLink>
+            <NavLink to={RoutesEnum.login}>Already have an account ?</NavLink>
           </div>
         </form>
       </div>
