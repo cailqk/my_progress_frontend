@@ -1,5 +1,4 @@
 const baseUrl = "http://localhost:5000/";
-const token = localStorage.getItem("token");
 
 async function request(method: string, url: string, data?: any) {
   const options: any = {
@@ -7,8 +6,10 @@ async function request(method: string, url: string, data?: any) {
     headers: {},
   };
 
-  if (token) {
-    options.headers["authorization"] = `Bearer ${token}`;
+  if (localStorage.getItem("token")) {
+    options.headers["authorization"] = `Bearer ${localStorage.getItem(
+      "token"
+    )}`;
   }
 
   if (data) {
@@ -19,11 +20,9 @@ async function request(method: string, url: string, data?: any) {
   return fetch(baseUrl + url, options)
     .then((res) => res.json())
     .then((data) => {
-
-      if(data.message === 'Forbidden resource') {
+      if (data.message === "Forbidden resource") {
         console.log(data);
-        
-      }      
+      }
       return data;
     });
 }

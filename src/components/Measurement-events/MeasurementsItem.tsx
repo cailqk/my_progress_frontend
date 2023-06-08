@@ -2,15 +2,15 @@ const MeasurementsItem = (props: any) => {
   return (
     <>
       {props.measurements.length === 0 && (
-        <div>
+        <div key={Math.random()}>
           <p>No data</p>
         </div>
       )}
       {props.measurements.length > 0 &&
         props.measurements.map((el: any) => {
           return (
-            <div className="col-4">
-              <div className="card" style={{ width: "15rem" }} key={el._id}>
+            <div className="col-4" key={el._id}>
+              <div className="card" style={{ width: "15rem" }}>
                 <div className="card-body">
                   <h5 className="card-title">Date: {el.date}</h5>
                   <p className="card-text">
@@ -31,6 +31,12 @@ const MeasurementsItem = (props: any) => {
                   <p className="card-text">
                     <strong>Biceps:</strong> {el.biceps} cm
                   </p>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <button className="btn btn-warning">Details</button>
+                    <button className="btn btn-danger">Delete</button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -8,7 +8,8 @@ import { Error } from "../core";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [error, setError] = useState("");
+  const [showError, setshowError] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,31 +18,34 @@ const Login = () => {
     e.preventDefault();
 
     if (email === "" || password === "") {
-      setErrorMessage(true);
+      setError("Please fill all the fields!");
+      setshowError(true);
       return;
     }
 
-    const token = await api.post("auth", {
-      email,
-      password,
-    });
-
-    if (token.statusCode === 400) {
-      setPassword("");
-      setErrorMessage(true);
-      return;
-    }
-
-    localStorage.setItem("token", token["access_token"]);
-    dispatch(logActions.toggle());
-    navigate("/");
+    await api
+      .post("auth", {
+        email,
+        password,
+      })
+      .then((res) => {
+        if (res.statusCode || res === undefined) {
+          setPassword("");
+          setError(res.message);
+          setshowError(true);
+          return;
+        }
+        localStorage.setItem("token", res["access_token"]);
+        dispatch(logActions.toggle());
+        navigate("/");
+      });
   };
 
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
-        <div className={errorMessage ? "mb-5 visible" : "invisible"}>
-          <Error error={"Incorrect data!"} />
+        <div className={showError ? "mb-5 visible" : "invisible"}>
+          <Error error={error} />
         </div>
         <form onSubmit={submitHandler}>
           <div className="mb-3">
