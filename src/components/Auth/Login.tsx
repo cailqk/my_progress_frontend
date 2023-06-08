@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { logActions } from "../../store/user-slice";
 import * as api from "../../requests/API";
 import { Error } from "../core";
+import { RoutesEnum } from "../../shared/utils/enums";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -26,17 +27,15 @@ const Login = () => {
       password,
     });
 
-    if (token.statusCode) {
-      if (token.statusCode !== 200) {
-        setPassword("");
-        setErrorMessage(true);
-        return;
-      }
+    if (token.statusCode && token.statusCode !== 200) {
+      setPassword("");
+      setErrorMessage(true);
+      return;
     }
 
     localStorage.setItem("token", token["access_token"]);
     dispatch(logActions.toggle());
-    navigate("/");
+    navigate(RoutesEnum.home);
   };
 
   return (
@@ -77,7 +76,7 @@ const Login = () => {
             <button type="submit" className="btn btn-primary">
               Log in
             </button>
-            <NavLink style={{ cursor: "pointer" }} to="/register">
+            <NavLink to={RoutesEnum.register}>
               Don't have an account ?
             </NavLink>
           </div>

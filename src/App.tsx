@@ -1,7 +1,9 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { Navbar, Spinner } from "./components/core";
+import { Navbar } from "./components/core";
 import { Profile } from "./components/user";
+import Spinner from "./shared/Spinner";
+import { RoutesEnum } from "./shared/utils/enums";
 
 const Home = React.lazy(() => import("./components/core/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -14,7 +16,7 @@ function App() {
       <div className="container">
         <Routes>
           <Route
-            path="/"
+            path={RoutesEnum.home}
             element={
               <React.Suspense fallback={<Spinner />}>
                 <Home />
@@ -22,7 +24,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/login"
+            path={RoutesEnum.login}
             element={
               <React.Suspense fallback={<Spinner />}>
                 <Login />
@@ -30,7 +32,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/register"
+            path={RoutesEnum.register}
             element={
               <React.Suspense fallback={<Spinner />}>
                 <Register />
@@ -38,7 +40,7 @@ function App() {
             }
           ></Route>
           <Route
-            path="/profile"
+            path={RoutesEnum.profile}
             element={
               <React.Suspense fallback={<Spinner />}>
                 <Profile />

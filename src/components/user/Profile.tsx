@@ -1,14 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { dateParser } from "../../shared/dateParser";
+import { dateParser } from "../../shared/utils/dateParser";
 import * as api from "../../requests/API";
-import { User } from "../../shared/interfaces";
-import { Error } from "../core";
+import { User } from "../../shared/utils/interfaces";
+import { RoutesEnum } from "../../shared/utils/enums";
+import Error from "../../shared/Error";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);
   const [errors, setErrors] = useState([]);
+  const [enableEdit, setEnableEdit] = useState(false);
   const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    navigate(RoutesEnum.login);
+  }
+
+  const editValue = (field: string, value: string | number | Date) => {
+    setUser({
+      ...user,
+      [field]: value,
+    });
+    setEnableEdit(true);
+  };
 
   useEffect(() => {
     api.get("users/single").then((res) => {
@@ -20,7 +36,6 @@ const Profile = () => {
     e.preventDefault();
 
     if (window.confirm("Keep the changes ?")) {
-      
       const updated = {
         name: user.name,
         gender: user.gender,
@@ -35,7 +50,7 @@ const Profile = () => {
         }
 
         setUser({ ...user });
-        navigate("/");
+        navigate(RoutesEnum.home);
       });
     }
   };
@@ -82,10 +97,7 @@ const Profile = () => {
               id="nameInput"
               value={user.name}
               onChange={(e) => {
-                setUser({
-                  ...user,
-                  name: e.target.value,
-                });
+                editValue("name", e.target.value);
               }}
             />
           </div>
@@ -98,12 +110,9 @@ const Profile = () => {
               name="gender"
               id="gender"
               value={user.gender}
-              onChange={(e) =>
-                setUser({
-                  ...user,
-                  gender: e.target.value,
-                })
-              }
+              onChange={(e) => {
+                editValue("gender", e.target.value);
+              }}
             >
               <option value="male">male</option>
               <option value="female">female</option>
@@ -119,10 +128,7 @@ const Profile = () => {
               id="dateOfBirthInput"
               value={dateParser(user.dateOfBirth)}
               onChange={(e) => {
-                setUser({
-                  ...user,
-                  dateOfBirth: new Date(e.target.value),
-                });
+                editValue("dateOfBirth", new Date(e.target.value));
               }}
             />
           </div>
@@ -136,14 +142,15 @@ const Profile = () => {
               id="heightInput"
               value={user.height}
               onChange={(e) => {
-                setUser({
-                  ...user,
-                  height: Number(e.target.value),
-                });
+                editValue("height", Number(e.target.value));
               }}
             />
           </div>
-          <button type="submit" className="btn btn-outline-dark">
+          <button
+            type="submit"
+            className="btn btn-outline-dark"
+            disabled={!enableEdit}
+          >
             Edit
           </button>
         </form>
