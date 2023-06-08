@@ -15,9 +15,9 @@ const Measurements = () => {
 
   useEffect(() => {
     api.get("measurements").then((res) => {
-      setData(res)
+      setData(res);
     });
-  }, []);
+  }, [data]);
 
   return (
     <div className="row mt-3">

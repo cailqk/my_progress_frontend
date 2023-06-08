@@ -1,4 +1,16 @@
+import * as api from "../../requests/API";
+
 const MeasurementsItem = (props: any) => {
+
+  const deleteHandler = (data: string) => {
+
+    if (window.confirm("Would you really like to delete this Measurement ?")) {
+      api.del(`measurements/${data}`).then((res) => {
+        console.log(res);
+      });
+    }
+  };
+
   return (
     <>
       {props.measurements.length === 0 && (
@@ -35,7 +47,12 @@ const MeasurementsItem = (props: any) => {
                     style={{ display: "flex", justifyContent: "space-between" }}
                   >
                     <button className="btn btn-warning">Details</button>
-                    <button className="btn btn-danger">Delete</button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteHandler(el._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </div>
               </div>
