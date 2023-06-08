@@ -18,6 +18,12 @@ const Profile = () => {
     navigate(RoutesEnum.login);
   }
 
+  useEffect(() => {
+    api.get("users/single").then((res) => {
+      setUser(res);
+    });
+  }, []);
+
   const editValue = (field: string, value: string | number | Date) => {
     setUser({
       ...user,
@@ -25,12 +31,6 @@ const Profile = () => {
     });
     setEnableEdit(true);
   };
-
-  useEffect(() => {
-    api.get("users/single").then((res) => {
-      setUser(res);
-    });
-  }, []);
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
