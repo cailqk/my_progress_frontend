@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
+import { RoutesEnum } from "../../shared/utils/enums";
 import { Error } from "../core";
 
 const Register = () => {
@@ -42,7 +43,7 @@ const Register = () => {
         setErrors(res.message);
         return;
       }
-      navigate("/login");
+      navigate(RoutesEnum.login);
     });
   };
 
@@ -139,7 +140,7 @@ const Register = () => {
             <button type="submit" className="btn btn-primary">
               Register
             </button>
-            <NavLink style={{ cursor: "pointer" }} to="/login">
+            <NavLink to={RoutesEnum.login}>
               Already have an account ?
             </NavLink>
           </div>

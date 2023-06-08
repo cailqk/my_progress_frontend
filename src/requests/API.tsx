@@ -1,7 +1,7 @@
 const baseUrl = "http://localhost:5000/";
-const token = localStorage.getItem("token");
 
 async function request(method: string, url: string, data?: any) {
+  const token = localStorage.getItem("token");
   const options: any = {
     method,
     headers: {},
@@ -19,11 +19,9 @@ async function request(method: string, url: string, data?: any) {
   return fetch(baseUrl + url, options)
     .then((res) => res.json())
     .then((data) => {
-
-      if(data.message === 'Forbidden resource') {
+      if (data.message === "Forbidden resource") {
         console.log(data);
-        
-      }      
+      }
       return data;
     });
 }
