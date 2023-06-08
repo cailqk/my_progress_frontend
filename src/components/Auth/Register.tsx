@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
 import { RoutesEnum } from "../../shared/utils/enums";
-import { Error } from "../core";
+import Error from "../../shared/Error";
 
 const Register = () => {
   const [name, setName] = useState("");
