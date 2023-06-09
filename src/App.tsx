@@ -8,7 +8,7 @@ import { RoutesEnum } from "./shared/utils/enums";
 import { RootState } from "./store";
 import { logActions } from "./store/user-slice";
 
-const Home = React.lazy(() => import("./components/core/Home"));
+const Home = React.lazy(() => import("./components/core/Home/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
 const Register = React.lazy(() => import("./components/Auth/Register"));
 
