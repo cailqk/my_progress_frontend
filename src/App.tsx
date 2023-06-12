@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/core";
 import { Profile } from "./components/user";
+
+import {
+  LoggedInProtection,
+  LoggedOutProtection,
+} from "./shared/ProtectedRoutes";
+
 import Spinner from "./shared/Spinner";
 import { RoutesEnum } from "./shared/utils/enums";
-import { RootState } from "./store";
 import { logActions } from "./store/user-slice";
 
 const Home = React.lazy(() => import("./components/core/Home/Home"));
@@ -21,8 +26,6 @@ function App() {
     }
   }, []);
 
-  const isLoggedIn = useSelector((state: RootState) => state.user.loggedIn);
-
   return (
     <>
       <Navbar />
@@ -36,42 +39,36 @@ function App() {
               </React.Suspense>
             }
           ></Route>
-          <Route
-            path={RoutesEnum.login}
-            element={
-              !isLoggedIn ? (
+          <Route element={<LoggedInProtection />}>
+            <Route
+              path={RoutesEnum.login}
+              element={
                 <React.Suspense fallback={<Spinner />}>
                   <Login />
                 </React.Suspense>
-              ) : (
-                <Navigate to={RoutesEnum.home} />
-              )
-            }
-          ></Route>
-          <Route
-            path={RoutesEnum.register}
-            element={
-              !isLoggedIn ? (
+              }
+            />
+          </Route>
+          <Route element={<LoggedInProtection />}>
+            <Route
+              path={RoutesEnum.register}
+              element={
                 <React.Suspense fallback={<Spinner />}>
                   <Register />
                 </React.Suspense>
-              ) : (
-                <Navigate to={RoutesEnum.home} />
-              )
-            }
-          ></Route>
-          <Route
-            path={RoutesEnum.profile}
-            element={
-              isLoggedIn ? (
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={RoutesEnum.profile}
+              element={
                 <React.Suspense fallback={<Spinner />}>
                   <Profile />
                 </React.Suspense>
-              ) : (
-                <Navigate to={RoutesEnum.login} />
-              )
-            }
-          ></Route>
+              }
+            />
+          </Route>
         </Routes>
       </div>
     </>

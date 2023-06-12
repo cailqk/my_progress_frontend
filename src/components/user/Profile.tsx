@@ -5,6 +5,7 @@ import * as api from "../../requests/API";
 import { User } from "../../shared/utils/interfaces";
 import { RoutesEnum } from "../../shared/utils/enums";
 import Error from "../../shared/Error";
+import { highlightField } from "../../shared/utils/highlightField";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);
@@ -28,6 +29,7 @@ const Profile = () => {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrors([]);
 
     if (window.confirm("Keep the changes ?")) {
       const updated = {
@@ -87,7 +89,8 @@ const Profile = () => {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${
+                highlightField(errors, "name")}`}
               id="nameInput"
               value={user.name}
               onChange={(e) => {
@@ -100,7 +103,8 @@ const Profile = () => {
               Gender
             </label>
             <select
-              className="form-control"
+              className={`form-control ${
+                highlightField(errors, "gender")}`}
               name="gender"
               id="gender"
               value={user.gender}
@@ -118,7 +122,8 @@ const Profile = () => {
             </label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${
+                highlightField(errors, "dateOfBirth")}`}
               id="dateOfBirthInput"
               value={dateParser(user.dateOfBirth)}
               min={dateParser(new Date(1926, 0, 1))}
@@ -134,7 +139,8 @@ const Profile = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${
+                highlightField(errors, "height")}`}
               id="heightInput"
               value={user.height}
               min={110}
