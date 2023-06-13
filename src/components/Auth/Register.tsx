@@ -3,10 +3,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
 import { RoutesEnum } from "../../shared/utils/enums";
 import Error from "../../shared/Error";
-import { dateParser, maxDate } from "../../shared/utils/dateParser";
-
+import { dateParser, maxDate, minDate } from "../../shared/utils/dateFunctions";
 import { highlightField } from "../../shared/utils/highlightField";
-import "../../shared/utils/error.css";
+
+import "/App.module.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -128,8 +128,8 @@ const Register = () => {
               id="dateInput"
               aria-describedby="emailHelp"
               value={dateOfBirth}
-              min={dateParser(new Date(1926, 0, 1))}
-              max={dateParser(new Date(maxDate(new Date(), 4)))}
+              min={dateParser(new Date(minDate))}
+              max={dateParser(new Date(maxDate()))}
               required
               onChange={(e) => setDateOfBirth(e.target.value)}
             />

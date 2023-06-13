@@ -11,3 +11,13 @@
     padding: 2rem;
     box-shadow: 0 1px 18px 10px rgba(0, 0, 0, 0.1);
 }
+
+.home_buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+}
+
+.main_div {
+    margin: 2rem
+}

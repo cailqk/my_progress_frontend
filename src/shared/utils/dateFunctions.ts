@@ -15,7 +15,9 @@ export const dateParser = (date: Date) => {
   return final;
 };
 
-export const maxDate = (date: Date, years: number) => {
-  date.setFullYear(date.getFullYear() - years);
-  return date;
+export const maxDate = () => {
+  const date = new Date();
+  return date.setFullYear(date.getFullYear() - 4);
 };
+
+export const minDate = new Date(1926, 0, 1);

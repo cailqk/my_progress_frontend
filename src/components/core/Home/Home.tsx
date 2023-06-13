@@ -1,12 +1,12 @@
-import "./Home.css";
-
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../store";
 import { NavLink } from "react-router-dom";
+import { RootState } from "../../../store";
 import { RoutesEnum } from "../../../shared/utils/enums";
 import * as api from "../../../requests/API";
 import { User } from "../../../shared/utils/interfaces";
+
+import styles from "./Home.module.css";
 
 const Home = () => {
   const [user, setUser] = useState({} as User);
@@ -19,12 +19,12 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="home">
+    <section className={styles.home}>
       {isLoggedIn ? (
         <h3>Hello {user.name}! Glad to see you again!</h3>
       ) : (
         <div>
-          <div style={{ margin: "2rem" }}>
+          <div className={styles.main_div}>
             <h1>ShapeShifter</h1>
           </div>
           <p>
@@ -32,13 +32,7 @@ const Home = () => {
             your life.
           </p>
           <p>Log in or create your account and let's get started!</p>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-              marginTop: "2rem",
-            }}
-          >
+          <div className={styles.home_buttons}>
             <NavLink className="btn btn-primary" to={RoutesEnum.login}>
               Login
             </NavLink>
@@ -48,13 +42,6 @@ const Home = () => {
           </div>
         </div>
       )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          marginTop: "3rem",
-        }}
-      ></div>
     </section>
   );
 };
