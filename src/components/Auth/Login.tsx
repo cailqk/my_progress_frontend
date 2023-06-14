@@ -3,7 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logActions } from "../../store/user-slice";
 import * as api from "../../requests/API";
-import { Error } from "../core";
+import Error from "../../shared/components/Error";
+import { RoutesEnum } from "../../shared/utils/enums";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -23,22 +24,20 @@ const Login = () => {
       return;
     }
 
-    await api
-      .post("auth", {
-        email,
-        password,
-      })
-      .then((res) => {
-        if (res.statusCode || res === undefined) {
-          setPassword("");
-          setError(res.message);
-          setshowError(true);
-          return;
-        }
-        localStorage.setItem("token", res["access_token"]);
-        dispatch(logActions.toggle());
-        navigate("/");
-      });
+    const token = await api.post("auth", {
+      email,
+      password,
+    });
+
+    if (token.statusCode && token.statusCode !== 200) {
+      setPassword("");
+      setErrorMessage(true);
+      return;
+    }
+
+    localStorage.setItem("token", token["access_token"]);
+    dispatch(logActions.toggle());
+    navigate(RoutesEnum.home);
   };
 
   return (
@@ -79,7 +78,7 @@ const Login = () => {
             <button type="submit" className="btn btn-primary">
               Log in
             </button>
-            <NavLink style={{ cursor: "pointer" }} to="/register">
+            <NavLink to={RoutesEnum.register}>
               Don't have an account ?
             </NavLink>
           </div>

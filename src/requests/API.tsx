@@ -1,6 +1,7 @@
 const baseUrl = "http://localhost:5000/";
 
 async function request(method: string, url: string, data?: any) {
+  const token = localStorage.getItem("token");
   const options: any = {
     method,
     headers: {},

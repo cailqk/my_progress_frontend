@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
-import { Error } from "../core";
+import { RoutesEnum } from "../../shared/utils/enums";
+import Error from "../../shared/components/Error";
+import { dateParser, maxDate, minDate } from "../../shared/utils/dateFunctions";
+import { highlightField } from "../../shared/utils/highlightField";
+
+import "/App.module.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -9,13 +14,14 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [gender, setGender] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
-  const [height, setHeight] = useState<number>(0);
-  const [errors, setErrors] = useState([]);
+  const [height, setHeight] = useState<number>(110);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrors([]);
 
     if (
       name === "" ||
@@ -25,6 +31,7 @@ const Register = () => {
       dateOfBirth === "" ||
       height === 0
     ) {
+      setErrors(["Please fill all the fields!"]);
       return;
     }
 
@@ -42,7 +49,7 @@ const Register = () => {
         setErrors(res.message);
         return;
       }
-      navigate("/login");
+      navigate(RoutesEnum.login);
     });
   };
 
@@ -57,11 +64,13 @@ const Register = () => {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "name")}`}
               id="nameInput"
               value={name}
               required
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
             />
           </div>
           <div className="mb-3">
@@ -70,9 +79,8 @@ const Register = () => {
             </label>
             <input
               type="email"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "email")}`}
               id="emailInput"
-              aria-describedby="emailHelp"
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
@@ -84,7 +92,7 @@ const Register = () => {
             </label>
             <input
               type="password"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "password")}`}
               id="passwordInput"
               value={password}
               required
@@ -96,7 +104,7 @@ const Register = () => {
               Gender
             </label>
             <select
-              className="form-control"
+              className={`form-control ${highlightField(errors, "gender")}`}
               name="gender"
               id="gender"
               required
@@ -113,10 +121,15 @@ const Register = () => {
             </label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${highlightField(
+                errors,
+                "dateOfBirth"
+              )}`}
               id="dateInput"
               aria-describedby="emailHelp"
               value={dateOfBirth}
+              min={dateParser(new Date(minDate))}
+              max={dateParser(new Date(maxDate()))}
               required
               onChange={(e) => setDateOfBirth(e.target.value)}
             />
@@ -127,10 +140,12 @@ const Register = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "height")}`}
               id="heightInput"
               aria-describedby="emailHelp"
               value={height}
+              min={110}
+              max={230}
               required
               onChange={(e) => setHeight(Number(e.target.value))}
             />
@@ -139,9 +154,7 @@ const Register = () => {
             <button type="submit" className="btn btn-primary">
               Register
             </button>
-            <NavLink style={{ cursor: "pointer" }} to="/login">
-              Already have an account ?
-            </NavLink>
+            <NavLink to={RoutesEnum.login}>Already have an account ?</NavLink>
           </div>
         </form>
       </div>
