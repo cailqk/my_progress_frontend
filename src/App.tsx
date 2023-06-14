@@ -12,6 +12,9 @@ import {
 import Spinner from "./shared/components/Spinner";
 import { RoutesEnum } from "./shared/utils/enums";
 import { logActions } from "./store/user-slice";
+import MeasurementsList from "./components/Measurement-events/MeasurementsList";
+import MeasurementsCreate from "./components/Measurement-events/MeasurementsCreate";
+import MeasurementsEdit from "./components/Measurement-events/MeasurementsEdit";
 
 const Home = React.lazy(() => import("./components/core/Home/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -65,6 +68,36 @@ function App() {
               element={
                 <React.Suspense fallback={<Spinner />}>
                   <Profile />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={RoutesEnum.measurements}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <MeasurementsList />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={RoutesEnum.measurements_create}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <MeasurementsCreate />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={`${RoutesEnum.measurements_edit}/:id`}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <MeasurementsEdit />
                 </React.Suspense>
               }
             />

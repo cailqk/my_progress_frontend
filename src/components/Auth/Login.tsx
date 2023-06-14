@@ -9,8 +9,7 @@ import { RoutesEnum } from "../../shared/utils/enums";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [showError, setshowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,8 +18,7 @@ const Login = () => {
     e.preventDefault();
 
     if (email === "" || password === "") {
-      setError("Please fill all the fields!");
-      setshowError(true);
+      setErrorMessage(true);
       return;
     }
 
@@ -43,8 +41,8 @@ const Login = () => {
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
-        <div className={showError ? "mb-5 visible" : "invisible"}>
-          <Error error={error} />
+        <div className={errorMessage ? "mb-5 visible" : "invisible"}>
+          <Error error={"Invalid data!"} />
         </div>
         <form onSubmit={submitHandler}>
           <div className="mb-3">
@@ -78,9 +76,7 @@ const Login = () => {
             <button type="submit" className="btn btn-primary">
               Log in
             </button>
-            <NavLink to={RoutesEnum.register}>
-              Don't have an account ?
-            </NavLink>
+            <NavLink to={RoutesEnum.register}>Don't have an account ?</NavLink>
           </div>
         </form>
       </div>

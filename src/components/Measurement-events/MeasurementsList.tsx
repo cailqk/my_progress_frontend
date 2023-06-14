@@ -5,6 +5,7 @@ import MeasurementsItem from "./MeasurementsItem";
 import MeasurementsStats from "./MeasurementsStatistic";
 
 import styles from "./Measurements.module.css";
+import { RoutesEnum } from "../../shared/utils/enums";
 
 const Measurements = () => {
   const [data, setData] = useState([]);
@@ -28,7 +29,7 @@ const Measurements = () => {
       <div className="text-end mb-2">
         <button
           className="btn btn-success"
-          onClick={() => navigate("/measurements/create")}
+          onClick={() => navigate(`${RoutesEnum.measurements}/create`)}
         >
           Create
         </button>

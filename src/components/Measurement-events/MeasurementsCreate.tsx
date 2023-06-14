@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
-import { Error } from "../core";
+import Error from "../../shared/components/Error";
+import { RoutesEnum } from "../../shared/utils/enums";
 
 const MeasurementsCreate = () => {
   const [photo, setPhoto] = useState("");
@@ -32,9 +33,9 @@ const MeasurementsCreate = () => {
         setErrors(res.message);
         return;
       }
-      //TODO: SET MODAL TO SHOW SUCCESS FOR 2 SECONDS
+
       console.log(res);
-      navigate("/measurements");
+      navigate(RoutesEnum.measurements);
     });
   };
 

@@ -1,23 +1,26 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
-import img from './measurement.jpg'
+import { Modal } from "../../shared/components/Modal";
+import { dateParser } from "../../shared/utils/dateFunctions";
+import { RoutesEnum } from "../../shared/utils/enums";
+import img from "./measurement.jpg";
+
+import style from "./Measurements.module.css";
 
 const MeasurementsItem = (props: any) => {
-  const deleteHandler = (data: string) => {
-    if (window.confirm("Would you really like to delete this Measurement ?")) {
-      api.del(`measurements/${data}`).then((res) => {
-        console.log(res);
-      });
-    }
+  const [id, setId] = useState("");
+  const navigate = useNavigate();
+
+  const deleteHandler = (id: string) => {
+    api.del(`measurements/${id}`).then((res) => {
+      console.log(res);
+      return res;
+    });
   };
-// TODO: CHANGE ACCORDINGLY -> THIS TEMPORARY
-  const dateP = (date: Date) => {
-    const d = new Date(date);
 
-    const year = d.getFullYear();
-    const month = d.getMonth();
-    const day = d.getDate();
-
-    return `${day}-${month}-${year}`;
+  const editHandler = (id: string) => {
+    navigate(`${RoutesEnum.measurements_edit}/${id}`);
   };
 
   return (
@@ -33,6 +36,12 @@ const MeasurementsItem = (props: any) => {
           Filter
         </button>
       </div> */}
+      <Modal
+        text={"Are you sure you want to delete this measurement ?"}
+        onConfirm={() => deleteHandler(id)}
+        cancelButtonText={"No"}
+        confirmButtonText={"Yes"}
+      />
       {props.measurements.length === 0 && (
         <div key={Math.random()}>
           <p>No data</p>
@@ -54,17 +63,24 @@ const MeasurementsItem = (props: any) => {
             props.measurements.map((el: any) => {
               return (
                 <tr key={el._id}>
-                  <td>{dateP(el.date)}</td>
-                  <td>{el.weight} cm</td>
+                  <td>{dateParser(el.date)}</td>
+                  <td>{el.weight} kg</td>
                   <td>{el.chest} cm</td>
                   <td>{el.waist} cm</td>
                   <td>{el.hips} cm</td>
                   <td>{el.biceps} cm</td>
-                  <div>
-                    <button className="btn btn-success">Edit</button>
+                  <div className={style.buttons}>
+                    <button
+                      className="btn btn-success"
+                      onClick={() => editHandler(el._id)}
+                    >
+                      Edit
+                    </button>
                     <button
                       className="btn btn-danger"
-                      onClick={() => deleteHandler(el._id)}
+                      data-bs-toggle="modal"
+                      data-bs-target="#modal"
+                      onClick={() => setId(el._id)}
                     >
                       Delete
                     </button>
