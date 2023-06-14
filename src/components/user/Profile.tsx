@@ -4,9 +4,9 @@ import { dateParser, maxDate, minDate } from "../../shared/utils/dateFunctions";
 import * as api from "../../requests/API";
 import { User } from "../../shared/utils/interfaces";
 import { RoutesEnum } from "../../shared/utils/enums";
-import Error from "../../shared/Error";
+import Error from "../../shared/components/Error";
 import { highlightField } from "../../shared/utils/highlightField";
-import { Modal } from "../../shared/utils/Modal";
+import { Modal } from "../../shared/components/Modal";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);

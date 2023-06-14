@@ -1,4 +1,4 @@
-import { capitalizeMessage } from "./utils/capitalizeMessage";
+import { capitalizeMessage } from "../utils/capitalizeMessage";
 
 const Error = (props: { error: string[] | string }) => {
   const errorList = [];

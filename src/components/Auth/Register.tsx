@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
 import { RoutesEnum } from "../../shared/utils/enums";
-import Error from "../../shared/Error";
+import Error from "../../shared/components/Error";
 import { dateParser, maxDate, minDate } from "../../shared/utils/dateFunctions";
 import { highlightField } from "../../shared/utils/highlightField";
 

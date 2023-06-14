@@ -7,9 +7,9 @@ import { Profile } from "./components/user";
 import {
   LoggedInProtection,
   LoggedOutProtection,
-} from "./shared/ProtectedRoutes";
+} from "./shared/layouts/ProtectedRoutes";
 
-import Spinner from "./shared/Spinner";
+import Spinner from "./shared/components/Spinner";
 import { RoutesEnum } from "./shared/utils/enums";
 import { logActions } from "./store/user-slice";
 

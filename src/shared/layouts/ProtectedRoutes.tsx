@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { RoutesEnum } from "./utils/enums";
+import { RoutesEnum } from "../utils/enums";
 
 export const LoggedOutProtection = () => {
   const auth = localStorage.getItem("token");
