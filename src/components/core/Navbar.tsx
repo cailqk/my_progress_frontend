@@ -34,16 +34,6 @@ const Navbar = () => {
                 </NavLink>
               </div>
             )}
-            {!logged && (
-              <div className="navbar-nav position-absolute end-0">
-                <NavLink className="nav-link" to={RoutesEnum.login}>
-                  Login
-                </NavLink>
-                <NavLink className="nav-link" to={RoutesEnum.register}>
-                  Register
-                </NavLink>
-              </div>
-            )}
           </div>
         </div>
       </div>

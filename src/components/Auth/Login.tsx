@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logActions } from "../../store/user-slice";
 import * as api from "../../requests/API";
-import Error from "../../shared/Error";
+import Error from "../../shared/components/Error";
 import { RoutesEnum } from "../../shared/utils/enums";
 
 const Login = () => {

@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { dateParser } from "../../shared/utils/dateParser";
+import { dateParser, maxDate, minDate } from "../../shared/utils/dateFunctions";
 import * as api from "../../requests/API";
 import { User } from "../../shared/utils/interfaces";
 import { RoutesEnum } from "../../shared/utils/enums";
-import Error from "../../shared/Error";
+import Error from "../../shared/components/Error";
+import { highlightField } from "../../shared/utils/highlightField";
+import { Modal } from "../../shared/components/Modal";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);
@@ -26,34 +28,39 @@ const Profile = () => {
     setEnableEdit(true);
   };
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const submitHandler = () => {
+    setErrors([]);
 
-    if (window.confirm("Keep the changes ?")) {
-      const updated = {
-        name: user.name,
-        gender: user.gender,
-        dateOfBirth: user.dateOfBirth,
-        height: user.height,
-      };
+    const updated = {
+      name: user.name,
+      gender: user.gender,
+      dateOfBirth: user.dateOfBirth,
+      height: user.height,
+    };
 
-      api.patch(`users/${user._id}`, { ...updated }).then((res) => {
-        if (res.statusCode === 400) {
-          setErrors(res.message);
-          return;
-        }
+    api.patch(`users/${user._id}`, { ...updated }).then((res) => {
+      if (res.statusCode === 400) {
+        setErrors(res.message);
+        setEnableEdit(false);
+        return;
+      }
 
-        setUser({ ...user });
-        navigate(RoutesEnum.home);
-      });
-    }
+      setUser({ ...user });
+      navigate(RoutesEnum.home);
+    });
   };
 
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
         {errors.length > 0 && <Error error={errors} />}
-        <form onSubmit={submitHandler}>
+        <Modal
+          text={"Are you sure you'd like to keep the changes?"}
+          onConfirm={submitHandler}
+          cancelButtonText={"Cancel"}
+          confirmButtonText={"Save changes"}
+        />
+        <form>
           <div className="mb-3">
             <label htmlFor="emailInput" className="form-label">
               Email address
@@ -87,7 +94,7 @@ const Profile = () => {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "name")}`}
               id="nameInput"
               value={user.name}
               onChange={(e) => {
@@ -100,7 +107,7 @@ const Profile = () => {
               Gender
             </label>
             <select
-              className="form-control"
+              className={`form-control ${highlightField(errors, "gender")}`}
               name="gender"
               id="gender"
               value={user.gender}
@@ -118,11 +125,14 @@ const Profile = () => {
             </label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${highlightField(
+                errors,
+                "dateOfBirth"
+              )}`}
               id="dateOfBirthInput"
               value={dateParser(user.dateOfBirth)}
-              min={dateParser(new Date(1926, 0, 1))}
-              max={dateParser(new Date())}
+              min={dateParser(minDate)}
+              max={dateParser(new Date(maxDate()))}
               onChange={(e) => {
                 editValue("dateOfBirth", new Date(e.target.value));
               }}
@@ -134,7 +144,7 @@ const Profile = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "height")}`}
               id="heightInput"
               value={user.height}
               min={110}
@@ -144,14 +154,16 @@ const Profile = () => {
               }}
             />
           </div>
-          <button
-            type="submit"
-            className="btn btn-outline-dark"
-            disabled={!enableEdit}
-          >
-            Edit
-          </button>
         </form>
+        <button
+          type="submit"
+          className="btn btn-outline-dark"
+          disabled={!enableEdit}
+          data-bs-toggle="modal"
+          data-bs-target="#modal"
+        >
+          Edit
+        </button>
       </div>
     </div>
   );
