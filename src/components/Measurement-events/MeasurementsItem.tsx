@@ -1,52 +1,67 @@
 import * as api from "../../requests/API";
+import img from './measurement.jpg'
 
 const MeasurementsItem = (props: any) => {
-
   const deleteHandler = (data: string) => {
-
     if (window.confirm("Would you really like to delete this Measurement ?")) {
       api.del(`measurements/${data}`).then((res) => {
         console.log(res);
       });
     }
   };
+// TODO: CHANGE ACCORDINGLY -> THIS TEMPORARY
+  const dateP = (date: Date) => {
+    const d = new Date(date);
+
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    const day = d.getDate();
+
+    return `${day}-${month}-${year}`;
+  };
 
   return (
     <>
+      {/* <div>
+        <input
+          className="form-control me-2"
+          type="search"
+          placeholder="Filter measurements"
+          aria-label="Search"
+        />
+        <button className="btn btn-outline-success" type="submit">
+          Filter
+        </button>
+      </div> */}
       {props.measurements.length === 0 && (
         <div key={Math.random()}>
           <p>No data</p>
         </div>
       )}
-      {props.measurements.length > 0 &&
-        props.measurements.map((el: any) => {
-          return (
-            <div className="col-4" key={el._id}>
-              <div className="card" style={{ width: "15rem" }}>
-                <div className="card-body">
-                  <h5 className="card-title">Date: {el.date}</h5>
-                  <p className="card-text">
-                    <strong>Photo/s:</strong> {el.photo}
-                  </p>
-                  <p className="card-text">
-                    <strong>Weight:</strong> {el.weight} kg
-                  </p>
-                  <p className="card-text">
-                    <strong>Chest:</strong> {el.chest} cm
-                  </p>
-                  <p className="card-text">
-                    <strong>Waist:</strong> {el.waist} cm
-                  </p>
-                  <p className="card-text">
-                    <strong>Hips:</strong> {el.hips} cm
-                  </p>
-                  <p className="card-text">
-                    <strong>Biceps:</strong> {el.biceps} cm
-                  </p>
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <button className="btn btn-warning">Details</button>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Weight</th>
+            <th scope="col">Chest</th>
+            <th scope="col">Waist</th>
+            <th scope="col">Hips</th>
+            <th scope="col">Biceps</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.measurements.length > 0 &&
+            props.measurements.map((el: any) => {
+              return (
+                <tr key={el._id}>
+                  <td>{dateP(el.date)}</td>
+                  <td>{el.weight} cm</td>
+                  <td>{el.chest} cm</td>
+                  <td>{el.waist} cm</td>
+                  <td>{el.hips} cm</td>
+                  <td>{el.biceps} cm</td>
+                  <div>
+                    <button className="btn btn-success">Edit</button>
                     <button
                       className="btn btn-danger"
                       onClick={() => deleteHandler(el._id)}
@@ -54,11 +69,11 @@ const MeasurementsItem = (props: any) => {
                       Delete
                     </button>
                   </div>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+                </tr>
+              );
+            })}
+        </tbody>
+      </table>
     </>
   );
 };

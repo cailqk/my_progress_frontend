@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Navbar, Spinner } from "./components/core";
+import MeasurementsCreate from "./components/Measurement-events/MeasurementsCreate";
 import Measurements from "./components/Measurement-events/MeasurementsList";
 
 const Home = React.lazy(() => import("./components/core/Home"));
@@ -42,6 +43,14 @@ function App() {
             element={
               <React.Suspense fallback={<Spinner />}>
                 <Measurements />
+              </React.Suspense>
+            }
+          ></Route>
+           <Route
+            path="/measurements/create"
+            element={
+              <React.Suspense fallback={<Spinner />}>
+                <MeasurementsCreate />
               </React.Suspense>
             }
           ></Route>
