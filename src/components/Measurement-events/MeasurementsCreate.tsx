@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
 import Error from "../../shared/components/Error";
+import { dateParser } from "../../shared/utils/dateFunctions";
 import { RoutesEnum } from "../../shared/utils/enums";
 
 const MeasurementsCreate = () => {
@@ -11,6 +12,7 @@ const MeasurementsCreate = () => {
   const [waist, setWaist] = useState<number>(50);
   const [hips, setHips] = useState<number>(60);
   const [biceps, setBiceps] = useState<number>(25);
+  const [date, setDate] = useState("");
   const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
@@ -22,7 +24,7 @@ const MeasurementsCreate = () => {
     waist,
     hips,
     biceps,
-    date: new Date(),
+    date
   };
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -119,6 +121,20 @@ const MeasurementsCreate = () => {
               id="bicepsInput"
               placeholder={`min: ${biceps}`}
               onChange={(e) => setBiceps(Number(e.target.value))}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" className="form-label">
+              Date
+            </label>
+            <input
+              type="date"
+              className="form-control"
+              value={date}
+              id="dateInput"
+              max={dateParser(new Date())}
+              onChange={(e) => setDate(e.target.value)}
               required
             />
           </div>
