@@ -15,6 +15,8 @@ import { logActions } from "./store/user-slice";
 import MeasurementsList from "./components/Measurement-events/MeasurementsList";
 import MeasurementsCreate from "./components/Measurement-events/MeasurementsCreate";
 import MeasurementsEdit from "./components/Measurement-events/MeasurementsEdit";
+import ExerciseTypes from "./components/Exercise-type/ExerciseType-users";
+import ExerciseTypeCreate from "./components/Exercise-type/ExerciseType-create";
 
 const Home = React.lazy(() => import("./components/core/Home/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -98,6 +100,26 @@ function App() {
               element={
                 <React.Suspense fallback={<Spinner />}>
                   <MeasurementsEdit />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={`${RoutesEnum.exercise_types}`}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <ExerciseTypes />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={`${RoutesEnum.exercise_types_create}`}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <ExerciseTypeCreate />
                 </React.Suspense>
               }
             />

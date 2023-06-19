@@ -19,3 +19,14 @@ export interface User {
     date: Date;
     userId: string;
   }
+
+  export interface Exercise_types {
+    _id: string,
+    name: string,
+    muscleGroups: []
+  }
+
+  export interface Param {
+    name?: string,
+    group?: string
+  }
