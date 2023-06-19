@@ -17,18 +17,18 @@ export const MeasurementChart = (props: any): JSX.Element => {
   const showInGraph: any = [];
 
   check.forEach((el) => {
-    const found = props.measurements.find((measurement: any) => {
+    const found = props.measurements.find((measurement: Measurement) => {
       return dateParser(measurement.date) === el;
     });
 
     if (found) {
-     showInGraph.push(found);
+      showInGraph.push(found);
     } else {
-     showInGraph.push(0);
+      showInGraph.push(0);
     }
   });
 
- showInGraph.forEach((x: Measurement) => {
+  showInGraph.forEach((x: Measurement) => {
     if (check.includes(dateParser(x.date))) {
       weight.push(x.weight);
       chest.push(x.chest);

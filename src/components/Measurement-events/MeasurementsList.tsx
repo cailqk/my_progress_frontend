@@ -9,12 +9,13 @@ import { dateParser } from "../../shared/utils/dateFunctions";
 import { Measurement } from "../../shared/utils/interfaces";
 
 const Measurements = () => {
-  const [data, setData] = useState([]);
-  const navigate = useNavigate();
+  const [data, setData] = useState<Measurement[]>([]);
   const [dateFrom, setDateFrom] = useState<Date>(
     new Date(new Date().setDate(new Date().getDate() - 7))
   );
+  
   const [dateTo, setDateTo] = useState<Date>(new Date());
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
@@ -72,7 +73,7 @@ const Measurements = () => {
           Create
         </button>
       </div>
-      {data.length === 0 ? (
+      {data.length ? (
         <p>No Data</p>
       ) : (
         <>

@@ -9,12 +9,12 @@ import { Measurement } from "../../shared/utils/interfaces";
 import style from "./Measurements.module.css";
 
 const MeasurementsItem = (props: any) => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState<string>("");
   const navigate = useNavigate();
 
   const deleteHandler = (id: string) => {
-    api.del(`measurements/${id}`).then((res) => {
-     props.reloadMeasurements();
+    api.del(`measurements/${id}`).then(() => {
+      props.reloadMeasurements();
     });
   };
 
@@ -30,11 +30,6 @@ const MeasurementsItem = (props: any) => {
         cancelButtonText={"No"}
         confirmButtonText={"Yes"}
       />
-      {props.measurements.length === 0 && (
-        <div key={Math.random()}>
-          <p>No data</p>
-        </div>
-      )}
       <table className={`table table-striped`}>
         <thead>
           <tr>
@@ -82,6 +77,11 @@ const MeasurementsItem = (props: any) => {
               })}
         </tbody>
       </table>
+      {props.measurements.length && (
+        <div>
+          <p>No data</p>
+        </div>
+      )}
     </>
   );
 };

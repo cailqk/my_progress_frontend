@@ -7,14 +7,14 @@ import { RoutesEnum } from "../../shared/utils/enums";
 import { highlightField } from "../../shared/utils/highlightField";
 
 const MeasurementsCreate = () => {
-  const [photo, setPhoto] = useState("");
+  const [photo, setPhoto] = useState<string>("");
   const [weight, setWeight] = useState<number>(40);
   const [chest, setChest] = useState<number>(70);
   const [waist, setWaist] = useState<number>(50);
   const [hips, setHips] = useState<number>(60);
   const [biceps, setBiceps] = useState<number>(25);
-  const [date, setDate] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [date, setDate] = useState<string>("");
+  const [errors, setErrors] = useState<string[]>([]);
 
   const navigate = useNavigate();
 
@@ -37,7 +37,6 @@ const MeasurementsCreate = () => {
         return;
       }
 
-      console.log(res);
       navigate(RoutesEnum.measurements);
     });
   };

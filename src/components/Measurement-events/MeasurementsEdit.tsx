@@ -53,7 +53,7 @@ const MeasurementsEdit = () => {
         setEnableEdit(false);
         return;
       }
-      console.log(res);
+
       setMeasurement({ ...measurement });
       navigate(RoutesEnum.measurements);
     });
