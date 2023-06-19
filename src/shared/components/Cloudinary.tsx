@@ -12,7 +12,7 @@ const Clod = (img: string) => {
 
   const image = cld.image(img);
 
-  image.resize(thumbnail().width(150).height(250));
+  image.resize(thumbnail().width(250).height(250));
 
   return <AdvancedImage cldImg={image} />;
 };

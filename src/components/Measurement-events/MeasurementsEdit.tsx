@@ -7,26 +7,25 @@ import { Measurement } from "../../shared/utils/interfaces";
 import Error from "../../shared/components/Error";
 import { RoutesEnum } from "../../shared/utils/enums";
 import { highlightField } from "../../shared/utils/highlightField";
-import { AdvancedImage,  } from "@cloudinary/react";
-import { Cloudinary } from "@cloudinary/url-gen";
 import Clod from "../../shared/components/Cloudinary";
+
+import styles from "./Measurements.module.css";
 
 const MeasurementsEdit = () => {
   const { id } = useParams();
   const [measurement, setMeasurement] = useState({} as Measurement);
   const [enableEdit, setEnableEdit] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
     api.get(`measurements/${id}`).then((res) => {
       setMeasurement(res);
-      setImage(res.photo[0])
+      setImage(res.photo[0]);
     });
   }, []);
-  
- 
+
   const editValue = (field: string, value: string | number | Date) => {
     setMeasurement({
       ...measurement,
@@ -60,7 +59,6 @@ const MeasurementsEdit = () => {
     });
   };
 
-
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
@@ -72,19 +70,7 @@ const MeasurementsEdit = () => {
           confirmButtonText={"Keep"}
         />
         <form>
-          <div className="mb-3">
-            {Clod(image)}
-            <input
-              type="text"
-              className="form-control"
-              id="photoInput"
-              value={measurement.photo}
-              onChange={(e) => {
-                editValue("photo", e.target.value);
-              }}
-              required
-            />
-          </div>
+          <div className={`mb-3 ${styles.centered}`}>{Clod(image)}</div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
               Weight (kg)
