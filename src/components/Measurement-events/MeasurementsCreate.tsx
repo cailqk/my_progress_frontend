@@ -4,6 +4,7 @@ import * as api from "../../requests/API";
 import Error from "../../shared/components/Error";
 import { dateParser } from "../../shared/utils/dateFunctions";
 import { RoutesEnum } from "../../shared/utils/enums";
+import { highlightField } from "../../shared/utils/highlightField";
 
 const MeasurementsCreate = () => {
   const [photo, setPhoto] = useState("");
@@ -24,7 +25,7 @@ const MeasurementsCreate = () => {
     waist,
     hips,
     biceps,
-    date
+    date,
   };
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +53,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "photo")}`}
               id="photoInput"
               placeholder="photo url"
               onChange={(e) => setPhoto(e.target.value)}
@@ -65,7 +66,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "weight")}`}
               id="weightInput"
               placeholder={`min: ${weight}`}
               onChange={(e) => setWeight(Number(e.target.value))}
@@ -78,7 +79,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "chest")}`}
               id="chestInput"
               placeholder={`min: ${chest}`}
               onChange={(e) => setChest(Number(e.target.value))}
@@ -91,7 +92,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "waist")}`}
               id="waistInput"
               placeholder={`min: ${waist}`}
               onChange={(e) => setWaist(Number(e.target.value))}
@@ -104,7 +105,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "hips")}`}
               id="hipsInput"
               placeholder={`min: ${hips}`}
               onChange={(e) => setHips(Number(e.target.value))}
@@ -117,7 +118,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="number"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "biceps")}`}
               id="bicepsInput"
               placeholder={`min: ${biceps}`}
               onChange={(e) => setBiceps(Number(e.target.value))}
@@ -130,7 +131,7 @@ const MeasurementsCreate = () => {
             </label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${highlightField(errors, "date")}`}
               value={date}
               id="dateInput"
               max={dateParser(new Date())}
@@ -138,7 +139,7 @@ const MeasurementsCreate = () => {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-outline-dark">
             Create
           </button>
         </form>
