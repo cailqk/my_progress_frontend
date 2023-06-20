@@ -13,7 +13,7 @@ const Measurements = () => {
   const [dateFrom, setDateFrom] = useState<Date>(
     new Date(new Date().setDate(new Date().getDate() - 7))
   );
-  
+
   const [dateTo, setDateTo] = useState<Date>(new Date());
   const navigate = useNavigate();
 
@@ -74,8 +74,6 @@ const Measurements = () => {
         </button>
       </div>
       {data.length ? (
-        <p>No Data</p>
-      ) : (
         <>
           <MeasurementsItem
             measurements={data}
@@ -87,6 +85,8 @@ const Measurements = () => {
             dateTo={dateTo}
           />
         </>
+      ) : (
+        <p>No Data</p>
       )}
     </div>
   );

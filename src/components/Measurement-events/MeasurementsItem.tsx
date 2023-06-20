@@ -42,12 +42,12 @@ const MeasurementsItem = (props: any) => {
           </tr>
         </thead>
         <tbody>
-          {props.measurements.length > 0 &&
+          {props.measurements.length &&
             props.measurements
               .sort((a: Measurement, b: Measurement) => {
                 return new Date(b.date).getTime() - new Date(a.date).getTime();
               })
-              .map((el: any) => {
+              .map((el: Measurement) => {
                 return (
                   <tr key={el._id}>
                     <td>{dateParser(el.date)}</td>
@@ -77,11 +77,6 @@ const MeasurementsItem = (props: any) => {
               })}
         </tbody>
       </table>
-      {props.measurements.length && (
-        <div>
-          <p>No data</p>
-        </div>
-      )}
     </>
   );
 };
