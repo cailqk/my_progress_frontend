@@ -15,8 +15,9 @@ import { logActions } from "./store/user-slice";
 import MeasurementsList from "./components/Measurement-events/MeasurementsList";
 import MeasurementsCreate from "./components/Measurement-events/MeasurementsCreate";
 import MeasurementsEdit from "./components/Measurement-events/MeasurementsEdit";
-import ExerciseTypes from "./components/Exercise-type/ExerciseType-users";
-import ExerciseTypeCreate from "./components/Exercise-type/ExerciseType-create";
+import ExerciseTypeList from "./components/Exercise-type/ExerciseTypeList";
+import ExerciseTypeCreate from "./components/Exercise-type/ExerciseTypeCreate";
+import ExerciseTypeEdit from "./components/Exercise-type/ExerciseTypeEdit";
 
 const Home = React.lazy(() => import("./components/core/Home/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -109,7 +110,7 @@ function App() {
               path={`${RoutesEnum.exercise_types}`}
               element={
                 <React.Suspense fallback={<Spinner />}>
-                  <ExerciseTypes />
+                  <ExerciseTypeList />
                 </React.Suspense>
               }
             />
@@ -120,6 +121,16 @@ function App() {
               element={
                 <React.Suspense fallback={<Spinner />}>
                   <ExerciseTypeCreate />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={`${RoutesEnum.exercise_types_edit}/:id`}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <ExerciseTypeEdit />
                 </React.Suspense>
               }
             />
