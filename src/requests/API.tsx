@@ -7,8 +7,10 @@ async function request(method: string, url: string, data?: any) {
     headers: {},
   };
 
-  if (token) {
-    options.headers["authorization"] = `Bearer ${token}`;
+  if (localStorage.getItem("token")) {
+    options.headers["authorization"] = `Bearer ${localStorage.getItem(
+      "token"
+    )}`;
   }
 
   if (data) {

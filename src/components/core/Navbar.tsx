@@ -25,6 +25,9 @@ const Navbar = () => {
                 <NavLink className="nav-link" to={RoutesEnum.profile}>
                   Profile
                 </NavLink>
+                <NavLink className="nav-link" to={RoutesEnum.measurements}>
+                  Measurements
+                </NavLink>
                 <NavLink
                   className="nav-link"
                   onClick={logoutHandler}

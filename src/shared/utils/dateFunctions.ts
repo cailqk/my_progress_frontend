@@ -11,7 +11,7 @@ export const dateParser = (date: Date) => {
     day = "0" + day.toString();
   }
 
-  const final = `${year}-${month}-${day}`;
+  const final = `${year}-${month}-${day}`;  
   return final;
 };
 
@@ -21,3 +21,22 @@ export const maxDate = () => {
 };
 
 export const minDate = new Date(1926, 0, 1);
+
+export const getDates = (start: Date, end: Date) => {
+  const dates = [];
+
+  let currentDate = start;
+
+  function add(days: number) {
+    const date = new Date(this.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+  }
+
+  while (currentDate <= end) {
+    dates.push(dateParser(currentDate));
+    currentDate = add.call(currentDate, 1);
+  }
+  
+  return dates;
+};

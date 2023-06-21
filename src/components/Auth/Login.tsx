@@ -42,7 +42,7 @@ const Login = () => {
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
         <div className={errorMessage ? "mb-5 visible" : "invisible"}>
-          <Error error={"Incorrect data!"} />
+          <Error error={"Invalid data!"} />
         </div>
         <form onSubmit={submitHandler}>
           <div className="mb-3">
@@ -76,9 +76,7 @@ const Login = () => {
             <button type="submit" className="btn btn-primary">
               Log in
             </button>
-            <NavLink to={RoutesEnum.register}>
-              Don't have an account ?
-            </NavLink>
+            <NavLink to={RoutesEnum.register}>Don't have an account ?</NavLink>
           </div>
         </form>
       </div>

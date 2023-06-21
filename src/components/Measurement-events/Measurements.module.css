@@ -1,0 +1,14 @@
+.main_div {
+    display: flex;
+    max-width: 90%;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+  }
