@@ -5,6 +5,8 @@ import { RoutesEnum } from "../../shared/utils/enums";
 import { Exercise_types, Param } from "../../shared/utils/interfaces";
 import ExerciseTypeItem from "./ExerciseTypeItem";
 
+import styles from "./ExerciseType.module.css";
+
 const ExerciseTypeList = () => {
   const [data, setData] = useState<Exercise_types[]>([]);
   const [name, setName] = useState<string>("");
@@ -40,36 +42,22 @@ const ExerciseTypeList = () => {
     getTypes();
   }, []);
 
-  //TODO: DISCUSS ON STYLES AND IMPLEMENT THEM IN CSS
-
   return (
     <div className="container">
-      <div
-        style={{
-          display: "flex",
-          marginTop: "2rem",
-          marginBottom: "2rem",
-        }}
-      >
+      <div className={styles.searchDiv}>
         <input
           type="text"
           className="form-control mr-1"
           placeholder="Search by name"
           onChange={(e) => setName(e.target.value)}
-          style={{ marginRight: "1rem" }}
         ></input>
         <input
           type="text"
           className="form-control mr-1"
           placeholder="Search by muscle group"
           onChange={(e) => setGroup(e.target.value)}
-          style={{ marginRight: "1rem" }}
         ></input>
-        <button
-          className="btn btn-outline-success"
-          onClick={getTypes}
-          style={{ marginRight: "1rem" }}
-        >
+        <button className="btn btn-outline-success" onClick={getTypes}>
           Search
         </button>
         <button

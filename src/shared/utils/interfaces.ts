@@ -23,10 +23,20 @@ export interface User {
   export interface Exercise_types {
     _id: string,
     name: string,
-    muscleGroups: []
+    muscleGroups: string[]
   }
 
   export interface Param {
     name?: string,
     group?: string
   }
+
+  export const groups = [
+    "chest",
+    "back",
+    "biceps",
+    "triceps",
+    "shoulders",
+    "abs",
+    "legs",
+  ];

@@ -24,7 +24,7 @@ const ExerciseTypeItem = (props: any) => {
   return (
     <>
       <Modal
-        text={"Are you sure you want to delete this type ?"}
+        text={"Are you sure you want to delete this exercise type ?"}
         onConfirm={() => deleteHandler(id)}
         cancelButtonText={"No"}
         confirmButtonText={"Yes"}

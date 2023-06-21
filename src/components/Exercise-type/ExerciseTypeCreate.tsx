@@ -4,6 +4,7 @@ import * as api from "../../requests/API";
 import { useNavigate } from "react-router-dom";
 import { RoutesEnum } from "../../shared/utils/enums";
 import { highlightField } from "../../shared/utils/highlightField";
+import { groups } from "../../shared/utils/interfaces";
 
 const ExerciseTypeCreate = () => {
   const [name, setName] = useState<string>("");
@@ -16,16 +17,6 @@ const ExerciseTypeCreate = () => {
     name,
     muscleGroups,
   };
-
-  const groups = [
-    "chest",
-    "back",
-    "biceps",
-    "triceps",
-    "shoulders",
-    "abs",
-    "legs",
-  ];
 
   const groupChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOptions: string[] = Array.from(

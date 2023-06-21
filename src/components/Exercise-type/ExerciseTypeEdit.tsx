@@ -6,6 +6,7 @@ import Error from "../../shared/components/Error";
 import { Exercise_types } from "../../shared/utils/interfaces";
 import * as api from "../../requests/API";
 import { RoutesEnum } from "../../shared/utils/enums";
+import { groups } from "../../shared/utils/interfaces";
 
 const ExerciseTypeEdit = () => {
   const { id } = useParams();
@@ -15,18 +16,27 @@ const ExerciseTypeEdit = () => {
 
   const navigate = useNavigate();
 
+  const sortedGroups = groups.sort((a, b) => a.localeCompare(b));
+
   useEffect(() => {
     api.get(`exercise-type/${id}`).then((res) => {
       setExerciseType(res);
     });
   }, []);
 
-  const editValue = (field: string, value: string) => {
+  const editValue = (field: string, value: string | string[]) => {
     setExerciseType({
       ...exerciseType,
       [field]: value,
     });
     setEnableEdit(true);
+  };
+
+  const groupEditHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedOptions = Array.from(e.target.selectedOptions).map(
+      (option) => option.value
+    );
+    editValue("muscleGroups", selectedOptions);
   };
 
   const submitHandler = () => {
@@ -61,7 +71,7 @@ const ExerciseTypeEdit = () => {
         />
         <form>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="nameInput" className="form-label">
               Name
             </label>
             <input
@@ -76,23 +86,22 @@ const ExerciseTypeEdit = () => {
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="muscleGroupsInput" className="form-label">
               Muscle groups
             </label>
             <select
               className={`form-control ${highlightField(errors, "groups")}`}
+              id="muscleGroupsInput"
               value={exerciseType.muscleGroups}
+              onChange={(e) => groupEditHandler(e)}
               multiple
             >
-              {exerciseType.muscleGroups ? (
-                exerciseType.muscleGroups.map((el) => (
+              {exerciseType.muscleGroups &&
+                sortedGroups.map((el) => (
                   <option key={el} value={el}>
                     {el}
                   </option>
-                ))
-              ) : (
-                <p>No data</p>
-              )}
+                ))}
             </select>
           </div>
         </form>
