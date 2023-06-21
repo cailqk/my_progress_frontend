@@ -55,7 +55,10 @@ const ExerciseTypeItem = (props: any) => {
                         .sort((a: string, b: string) => a.localeCompare(b))
                         .join(", ")}
                     </td>
-                    <td className={styles.buttons}>
+                    <td
+                      className={styles.buttons}
+                      hidden={props.user.role === "admin" ? false : true}
+                    >
                       <button
                         className="btn btn-success"
                         onClick={() => editHandler(type._id)}

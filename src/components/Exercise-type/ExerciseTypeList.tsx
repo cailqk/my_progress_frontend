@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
 import { RoutesEnum } from "../../shared/utils/enums";
-import { Exercise_types, Param } from "../../shared/utils/interfaces";
+import { Exercise_types, Param, User } from "../../shared/utils/interfaces";
 import ExerciseTypeItem from "./ExerciseTypeItem";
 
 import styles from "./ExerciseType.module.css";
@@ -11,6 +11,7 @@ const ExerciseTypeList = () => {
   const [data, setData] = useState<Exercise_types[]>([]);
   const [name, setName] = useState<string>("");
   const [group, setGroup] = useState<string>("");
+  const [user, setUser] = useState({} as User);
 
   const navigate = useNavigate();
 
@@ -40,6 +41,9 @@ const ExerciseTypeList = () => {
 
   useEffect(() => {
     getTypes();
+    api.get("users/single").then((res) => {
+      setUser(res);
+    });
   }, []);
 
   return (
@@ -57,19 +61,19 @@ const ExerciseTypeList = () => {
           placeholder="Search by muscle group"
           onChange={(e) => setGroup(e.target.value)}
         ></input>
-        <button className="btn btn-outline-success" onClick={getTypes}>
+        <button className="btn btn-warning" onClick={getTypes}>
           Search
         </button>
         <button
           className="btn btn-success"
           onClick={() => navigate(RoutesEnum.exercise_types_create)}
-        >
+          >
           Create
         </button>
       </div>
       {data.length ? (
         <>
-          <ExerciseTypeItem types={data} reloadTypes={getTypes} />
+          <ExerciseTypeItem types={data} reloadTypes={getTypes} user={user}/>
         </>
       ) : (
         <p>No data</p>
