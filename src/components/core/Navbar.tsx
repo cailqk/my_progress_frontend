@@ -31,6 +31,9 @@ const Navbar = () => {
                 <NavLink className="nav-link" to={RoutesEnum.exercise_types}>
                   Exercise Types
                 </NavLink>
+                <NavLink className="nav-link" to={RoutesEnum.workouts}>
+                  Workouts
+                </NavLink>
                 <NavLink
                   className="nav-link"
                   onClick={logoutHandler}

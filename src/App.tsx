@@ -18,6 +18,8 @@ import MeasurementsEdit from "./components/Measurement-events/MeasurementsEdit";
 import ExerciseTypeList from "./components/Exercise-type/ExerciseTypeList";
 import ExerciseTypeCreate from "./components/Exercise-type/ExerciseTypeCreate";
 import ExerciseTypeEdit from "./components/Exercise-type/ExerciseTypeEdit";
+import WorkoutCreate from "./components/Workouts/WorkoutCreate";
+import WorkoutList from "./components/Workouts/WorkoutList";
 
 const Home = React.lazy(() => import("./components/core/Home/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -131,6 +133,26 @@ function App() {
               element={
                 <React.Suspense fallback={<Spinner />}>
                   <ExerciseTypeEdit />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={RoutesEnum.workouts}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <WorkoutList />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={RoutesEnum.workouts_create}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <WorkoutCreate />
                 </React.Suspense>
               }
             />

@@ -8,5 +8,7 @@ export enum RoutesEnum {
   measurements_edit = "/measurements",
   exercise_types = "/exercise-type",
   exercise_types_create = "/exercise-type/create",
-  exercise_types_edit = "/exercise-type"
+  exercise_types_edit = "/exercise-type",
+  workouts = "/workouts",
+  workouts_create = "/workouts/create"
 }
