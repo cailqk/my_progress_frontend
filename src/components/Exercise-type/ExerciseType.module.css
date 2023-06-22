@@ -1,0 +1,16 @@
+.centered_text {
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.searchDiv {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    float: left;
+    column-gap: 1rem;
+}
