@@ -26,11 +26,11 @@ const ExerciseTypeItem = (props: {
     navigate(`${RoutesEnum.exercise_types_edit}/${id}`);
   };
 
-  function sortMuscleGroups(array: string[]) {
+  function sortMuscleGroups(array: string[]): string {
     return array.sort((a: string, b: string) => a.localeCompare(b)).join(", ");
   }
 
-  function sortExerciseTypes(types: Exercise_types[]) {
+  function sortExerciseTypes(types: Exercise_types[]): JSX.Element[] {
     const sortedTypes = types
       .sort((a: Exercise_types, b: Exercise_types) =>
         a.name.localeCompare(b.name)
