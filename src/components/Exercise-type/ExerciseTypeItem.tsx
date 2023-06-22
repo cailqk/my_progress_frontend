@@ -4,15 +4,20 @@ import * as api from "../../requests/API";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Exercise_types } from "../../shared/utils/interfaces";
+import { User } from "../../shared/utils/interfaces";
 
 import styles from "./ExerciseType.module.css";
 
-const ExerciseTypeItem = (props: any) => {
+const ExerciseTypeItem = (props: {
+  types: Exercise_types[];
+  reloadTypes: () => void;
+  user: User;
+}) => {
   const [id, setId] = useState<string>("");
   const navigate = useNavigate();
 
   const deleteHandler = (id: string) => {
-    api.del(`exercise-type/${id}`).then((res) => {
+    api.del(`exercise-type/${id}`).then(() => {
       props.reloadTypes();
     });
   };
@@ -20,6 +25,47 @@ const ExerciseTypeItem = (props: any) => {
   const editHandler = (id: string) => {
     navigate(`${RoutesEnum.exercise_types_edit}/${id}`);
   };
+
+  function sortMuscleGroups(array: string[]) {
+    return array.sort((a: string, b: string) => a.localeCompare(b)).join(", ");
+  }
+
+  function sortExerciseTypes(types: Exercise_types[]) {
+    const sortedTypes = types
+      .sort((a: Exercise_types, b: Exercise_types) =>
+        a.name.localeCompare(b.name)
+      )
+      .map((type: Exercise_types) => {
+        return (
+          <tr key={type._id}>
+            <td className={styles.centered_text}>{type.name}</td>
+            <td className={styles.centered_text}>
+              {sortMuscleGroups(type.muscleGroups)}
+            </td>
+            <td
+              className={styles.buttons}
+              hidden={props.user.role === "admin" ? false : true}
+            >
+              <button
+                className="btn btn-success"
+                onClick={() => editHandler(type._id)}
+              >
+                Edit
+              </button>
+              <button
+                className="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#modal"
+                onClick={() => setId(type._id)}
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        );
+      });
+    return sortedTypes;
+  }
 
   return (
     <>
@@ -40,44 +86,7 @@ const ExerciseTypeItem = (props: any) => {
             </th>
           </tr>
         </thead>
-        <tbody>
-          {props.types.length &&
-            props.types
-              .sort((a: Exercise_types, b: Exercise_types) =>
-                a.name.localeCompare(b.name)
-              )
-              .map((type: Exercise_types) => {
-                return (
-                  <tr key={type._id}>
-                    <td className={styles.centered_text}>{type.name}</td>
-                    <td className={styles.centered_text}>
-                      {type.muscleGroups
-                        .sort((a: string, b: string) => a.localeCompare(b))
-                        .join(", ")}
-                    </td>
-                    <td
-                      className={styles.buttons}
-                      hidden={props.user.role === "admin" ? false : true}
-                    >
-                      <button
-                        className="btn btn-success"
-                        onClick={() => editHandler(type._id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-danger"
-                        data-bs-toggle="modal"
-                        data-bs-target="#modal"
-                        onClick={() => setId(type._id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-        </tbody>
+        <tbody>{props.types.length && sortExerciseTypes(props.types)}</tbody>
       </table>
     </>
   );

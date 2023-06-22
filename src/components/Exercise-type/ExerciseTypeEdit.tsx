@@ -22,7 +22,7 @@ const ExerciseTypeEdit = () => {
     api.get(`exercise-type/${id}`).then((res) => {
       setExerciseType(res);
     });
-  }, []);
+  },[id]);
 
   const editValue = (field: string, value: string | string[]) => {
     setExerciseType({
