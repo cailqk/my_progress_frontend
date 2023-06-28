@@ -10,5 +10,7 @@ export enum RoutesEnum {
   exercise_types_create = "/exercise-type/create",
   exercise_types_edit = "/exercise-type",
   workouts = "/workouts",
-  workouts_create = "/workouts/create"
+  workouts_create = "/workouts/create",
+  workouts_edit = "/workout",
+  users = "/users"
 }

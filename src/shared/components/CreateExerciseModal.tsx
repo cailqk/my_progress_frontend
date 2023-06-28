@@ -22,7 +22,19 @@ export const CreateExerciseModal = (props: any) => {
 
   const addExercise = async () => {
     await api.post("exercises", exercise).then((res) => {
-      console.log(res);
+      setexerciseType("");
+      setSeries(1);
+      setRepetitions(undefined);
+      setWeight(undefined);
+      setTime(undefined);
+      setDistance(undefined);
+      
+      const exTypeInformation = exTypes.find(
+        (type) => type._id === res.data.exerciseType
+      );
+
+      res.data.name = exTypeInformation?.name;
+      props.onAdd(res.data);
     });
   };
 
@@ -43,6 +55,68 @@ export const CreateExerciseModal = (props: any) => {
         );
       });
   }
+
+  const renderForCardio = () => {
+    return (
+      <>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-group">
+            Time (min)
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="timeInput"
+            value={time}
+            onChange={(e) => setTime(Number(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-group">
+            Distance (km)
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="distanceInput"
+            value={distance}
+            onChange={(e) => setDistance(Number(e.target.value))}
+          />
+        </div>
+      </>
+    );
+  };
+
+  const renderForWeight = () => {
+    return (
+      <>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-group">
+            Repetitions
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="repsInput"
+            value={repetitions}
+            onChange={(e) => setRepetitions(Number(e.target.value))}
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-group">
+            Weight (kg)
+          </label>
+          <input
+            type="number"
+            className="form-control"
+            id="weightInput"
+            value={weight}
+            onChange={(e) => setWeight(Number(e.target.value))}
+          />
+        </div>
+      </>
+    );
+  };
 
   return (
     <div
@@ -83,58 +157,6 @@ export const CreateExerciseModal = (props: any) => {
                       id="seriesInput"
                       value={series}
                       onChange={(e) => setSeries(Number(e.target.value))}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-group">
-                      Repetitions*
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="repsInput"
-                      value={repetitions}
-                      onChange={(e) => setRepetitions(Number(e.target.value))}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-group">
-                      Weight (kg)
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="weightInput"
-                      value={weight}
-                      onChange={(e) => setWeight(Number(e.target.value))}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-group">
-                      Time (min)
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="timeInput"
-                      value={time}
-                      onChange={(e) => setTime(Number(e.target.value))}
-                      required
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="name" className="form-group">
-                      Distance (km)
-                    </label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      id="distanceInput"
-                      value={distance}
-                      onChange={(e) => setDistance(Number(e.target.value))}
                       required
                     />
                   </div>

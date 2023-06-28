@@ -8,6 +8,8 @@ import { RoutesEnum } from "../../shared/utils/enums";
 import { dateParser } from "../../shared/utils/dateFunctions";
 import { Measurement } from "../../shared/utils/interfaces";
 
+import styles from "./Measurements.module.css"
+
 const Measurements = () => {
   const [data, setData] = useState<Measurement[]>([]);
   const [dateFrom, setDateFrom] = useState<Date>(
@@ -45,7 +47,7 @@ const Measurements = () => {
   return (
     <div className="container">
       <h2>Measurements</h2>
-      <div style={{ width: "50rem", display: "flex" }}>
+      <div className={styles.searchDiv}>
         <input
           className="form-control mr-1"
           type="date"
@@ -61,11 +63,9 @@ const Measurements = () => {
           onChange={(e) => setDateTo(new Date(e.target.value))}
           max={dateParser(new Date())}
         />
-        <button className="btn btn-outline-success" onClick={getMeasurements}>
-          Filter
+        <button className="btn btn-warning" onClick={getMeasurements}>
+          Seacrh
         </button>
-      </div>
-      <div className="text-end mb-2">
         <button
           className="btn btn-success"
           onClick={() => navigate(`${RoutesEnum.measurements}/create`)}

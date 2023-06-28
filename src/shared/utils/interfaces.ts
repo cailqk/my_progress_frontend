@@ -36,6 +36,8 @@ export interface Workout {
   user: string;
   exer: string[];
   date: Date;
+  found_exercises: Exercise;
+  found_exType: Exercise_types;
 }
 
 export interface Exercise {
@@ -46,6 +48,7 @@ export interface Exercise {
   weight?: number;
   time?: number;
   distance?: number;
+  name?: string;
 }
 
 export const groups = [

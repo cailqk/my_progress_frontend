@@ -10,5 +10,5 @@ export const LoggedOutProtection = () => {
 export const LoggedInProtection = () => {
   const auth = localStorage.getItem("token");
 
-  return auth ? <Navigate to={RoutesEnum.home} /> : <Outlet />
-}
+  return auth ? <Navigate to={RoutesEnum.home} /> : <Outlet />;
+};

@@ -21,7 +21,24 @@ const Home = () => {
   return (
     <section className={styles.home}>
       {isLoggedIn ? (
-        <h3>Hello {user.name}! Glad to see you again!</h3>
+        <>
+          <h3>Hello {user.name}! Glad to see you again!</h3>
+          <div className={styles.home_buttons}>
+            <NavLink
+              className="btn btn-success"
+              to={RoutesEnum.measurements_create}
+            >
+              Log a Measurement
+            </NavLink>
+
+            <NavLink
+              className="btn btn-success"
+              to={RoutesEnum.workouts_create}
+            >
+              Log a Workout
+            </NavLink>
+          </div>
+        </>
       ) : (
         <div>
           <div className={styles.main_div}>

@@ -1,12 +1,23 @@
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { RoutesEnum } from "../../shared/utils/enums";
 import { RootState } from "../../store";
 import { logActions } from "../../store/user-slice";
 
+import * as api from "../../requests/API";
+import { User } from "../../shared/utils/interfaces";
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const logged = useSelector((state: RootState) => state.user.loggedIn);
+  const [user, setUser] = useState({} as User);
+
+  useEffect(() => {
+    api.get("users/single").then((res) => {
+      setUser(res);
+    });
+  }, [logged]);
 
   const logoutHandler = () => {
     dispatch(logActions.logout());
@@ -34,6 +45,11 @@ const Navbar = () => {
                 <NavLink className="nav-link" to={RoutesEnum.workouts}>
                   Workouts
                 </NavLink>
+                {user.role === "admin" && (
+                  <NavLink className="nav-link" to={RoutesEnum.users}>
+                    Users
+                  </NavLink>
+                )}
                 <NavLink
                   className="nav-link"
                   onClick={logoutHandler}

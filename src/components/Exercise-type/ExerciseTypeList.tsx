@@ -64,16 +64,18 @@ const ExerciseTypeList = () => {
         <button className="btn btn-warning" onClick={getTypes}>
           Search
         </button>
+
         <button
           className="btn btn-success"
+          hidden={user.role === "admin" ? false : true}
           onClick={() => navigate(RoutesEnum.exercise_types_create)}
-          >
+        >
           Create
         </button>
       </div>
       {data.length ? (
         <>
-          <ExerciseTypeItem types={data} reloadTypes={getTypes} user={user}/>
+          <ExerciseTypeItem types={data} reloadTypes={getTypes} user={user} />
         </>
       ) : (
         <p>No data</p>
