@@ -42,25 +42,24 @@ const ExerciseTypeItem = (props: {
             <td className={styles.centered_text}>
               {sortMuscleGroups(type.muscleGroups)}
             </td>
-            <td
-              className={styles.buttons}
-              hidden={props.user.role === "admin" ? false : true}
-            >
-              <button
-                className="btn btn-success"
-                onClick={() => editHandler(type._id)}
-              >
-                Edit
-              </button>
-              <button
-                className="btn btn-danger"
-                data-bs-toggle="modal"
-                data-bs-target="#modal"
-                onClick={() => setId(type._id)}
-              >
-                Delete
-              </button>
-            </td>
+            {props.user.role === "admin" && (
+              <td className={styles.buttons}>
+                <button
+                  className="btn btn-success"
+                  onClick={() => editHandler(type._id)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-danger"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modal"
+                  onClick={() => setId(type._id)}
+                >
+                  Delete
+                </button>
+              </td>
+            )}
           </tr>
         );
       });
