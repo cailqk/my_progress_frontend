@@ -65,13 +65,14 @@ const ExerciseTypeList = () => {
           Search
         </button>
 
-        <button
-          className="btn btn-success"
-          hidden={user.role === "admin" ? false : true}
-          onClick={() => navigate(RoutesEnum.exercise_types_create)}
-        >
-          Create
-        </button>
+        {user.role === "admin" && (
+          <button
+            className="btn btn-success"
+            onClick={() => navigate(RoutesEnum.exercise_types_create)}
+          >
+            Create
+          </button>
+        )}
       </div>
       {data.length ? (
         <>
