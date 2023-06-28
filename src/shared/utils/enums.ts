@@ -12,5 +12,6 @@ export enum RoutesEnum {
   workouts = "/workouts",
   workouts_create = "/workouts/create",
   workouts_edit = "/workout",
-  users = "/users"
+  users = "/users",
+  user_edit = "/user/edit"
 }
