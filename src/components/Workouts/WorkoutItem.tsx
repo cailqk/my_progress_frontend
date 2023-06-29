@@ -41,7 +41,7 @@ const WorkoutItem = (props: {
               className="btn btn-success"
               onClick={() => editHandler(w._id)}
             >
-              Edit
+              Details
             </button>
             <button
               className="btn btn-danger"

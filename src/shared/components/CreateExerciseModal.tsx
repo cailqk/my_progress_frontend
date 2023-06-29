@@ -28,7 +28,7 @@ export const CreateExerciseModal = (props: any) => {
       setWeight(undefined);
       setTime(undefined);
       setDistance(undefined);
-      
+
       const exTypeInformation = exTypes.find(
         (type) => type._id === res.data.exerciseType
       );
@@ -160,6 +160,10 @@ export const CreateExerciseModal = (props: any) => {
                       required
                     />
                   </div>
+                  {exerciseType === "6453a6f0f8106fd6025964ac" ||
+                  exerciseType === "6491ad1ade43f58cf388f026"
+                    ? renderForCardio()
+                    : renderForWeight()}
                 </form>
               </div>
             </div>

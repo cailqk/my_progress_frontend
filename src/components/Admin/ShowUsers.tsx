@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as api from "../../requests/API";
-import { Modal } from "../../shared/components/Modal";
+import CardLayout from "../../shared/layouts/CardLayout";
 import { dateParser } from "../../shared/utils/dateFunctions";
 import { RoutesEnum } from "../../shared/utils/enums";
 import { User } from "../../shared/utils/interfaces";
@@ -63,13 +63,7 @@ const ShowUsers = () => {
     });
 
   return (
-    <>
-      <Modal
-        text={"Are you sure you want to delete this user ?"}
-        onConfirm={() => deleteHandler(id)}
-        cancelButtonText={"No"}
-        confirmButtonText={"Yes"}
-      />
+    <CardLayout>
       <table className="table table-striped">
         <thead>
           <tr>
@@ -83,7 +77,7 @@ const ShowUsers = () => {
         </thead>
         <tbody>{userData}</tbody>
       </table>
-    </>
+    </CardLayout>
   );
 };
 

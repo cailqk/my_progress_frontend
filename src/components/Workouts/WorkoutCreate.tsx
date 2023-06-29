@@ -6,6 +6,7 @@ import { dateParser } from "../../shared/utils/dateFunctions";
 import Error from "../../shared/components/Error";
 import { useNavigate } from "react-router-dom";
 import { RoutesEnum } from "../../shared/utils/enums";
+import CardLayout from "../../shared/layouts/CardLayout";
 
 const WorkoutCreate = () => {
   const [user, setUser] = useState({} as User);
@@ -38,15 +39,16 @@ const WorkoutCreate = () => {
 
   const info = exercises.map((ex: Exercise) => {
     return (
-      <li key={ex._id}>
+      <li key={ex._id} style={{marginTop: "10px"}}>
         {`${ex.name} - ${ex.series} series`}
         <button
           className="btn btn-danger btn-sm"
+          style={{ marginLeft: "10px" }}
           onClick={() => {
             removeExercise(ex._id);
           }}
         >
-          X
+          x
         </button>
       </li>
     );
@@ -74,45 +76,47 @@ const WorkoutCreate = () => {
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
-        {errors.length > 0 && <Error error={errors} />}
-        <CreateExerciseModal
-          cancelButtonText="Dismiss"
-          confirmButtonText="Confirm"
-          onAdd={(el: any) => addExercise(el)}
-        />
-        <form onSubmit={submitHandler}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-group">
-              Exercises
-            </label>
-            <ul>{exercises.length ? info : <p>No Exercises</p>}</ul>
-            <button
-              type="button"
-              className="btn btn-warning"
-              data-bs-toggle="modal"
-              data-bs-target="#modal"
-            >
-              *Add Exercise*
+        <CardLayout>
+          {errors.length > 0 && <Error error={errors} />}
+          <CreateExerciseModal
+            cancelButtonText="Dismiss"
+            confirmButtonText="Confirm"
+            onAdd={(el: any) => addExercise(el)}
+          />
+          <form onSubmit={submitHandler}>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-group">
+                Exercises
+              </label>
+              <ul>{exercises.length ? info : <p>No Exercises</p>}</ul>
+              <button
+                type="button"
+                className="btn btn-warning"
+                data-bs-toggle="modal"
+                data-bs-target="#modal"
+              >
+                *Add Exercise*
+              </button>
+            </div>
+            <div className="mb-3">
+              <label htmlFor="name" className="form-group">
+                Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                id="dateInput"
+                max={dateParser(new Date())}
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Create
             </button>
-          </div>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-group">
-              Date
-            </label>
-            <input
-              type="date"
-              className="form-control"
-              id="dateInput"
-              max={dateParser(new Date())}
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              required
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Create
-          </button>
-        </form>
+          </form>
+        </CardLayout>
       </div>
     </div>
   );

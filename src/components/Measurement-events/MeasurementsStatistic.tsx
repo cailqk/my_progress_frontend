@@ -79,9 +79,9 @@ export const MeasurementChart = (props: any): JSX.Element => {
     },
   };
   return (
-    <>
+    <div style={{height: "400px", display: "flex", justifyContent: "center"}}>
       <Bar ref={ref} data={data} />
-    </>
+    </div>
   );
 };
 

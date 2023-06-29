@@ -6,7 +6,7 @@ import { RoutesEnum } from "../../../shared/utils/enums";
 import * as api from "../../../requests/API";
 import { User } from "../../../shared/utils/interfaces";
 
-import styles from "./Home.module.css";
+import styles from "./Core.module.css";
 
 const Home = () => {
   const [user, setUser] = useState({} as User);
