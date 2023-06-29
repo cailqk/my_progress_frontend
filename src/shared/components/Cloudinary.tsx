@@ -1,6 +1,4 @@
-import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen";
-import { crop, thumbnail } from "@cloudinary/url-gen/actions/resize";
 
 const cloudName = "dwuz66zpb";
 const Clod = (img: string) => {
@@ -12,9 +10,7 @@ const Clod = (img: string) => {
 
   const image = cld.image(img);
 
-  image.resize(thumbnail().width(250).height(250));
-
-  return <AdvancedImage cldImg={image} />;
+  return <img height="200" src={image.toURL()}></img>;
 };
 
 export default Clod;

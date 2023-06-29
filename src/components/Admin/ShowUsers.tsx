@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import * as api from "../../requests/API";
+import CardLayout from "../../shared/layouts/CardLayout";
 import { dateParser } from "../../shared/utils/dateFunctions";
 import { User } from "../../shared/utils/interfaces";
 
@@ -28,19 +29,21 @@ const ShowUsers = () => {
     });
 
   return (
-    <table className="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Gender</th>
-          <th scope="col">Role</th>
-          <th scope="col">Birthday</th>
-          <th scope="col">Height(cm)</th>
-        </tr>
-      </thead>
-      <tbody>{userData}</tbody>
-    </table>
+    <CardLayout>
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Role</th>
+            <th scope="col">Birthday</th>
+            <th scope="col">Height(cm)</th>
+          </tr>
+        </thead>
+        <tbody>{userData}</tbody>
+      </table>
+    </CardLayout>
   );
 };
 

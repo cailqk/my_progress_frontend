@@ -8,6 +8,8 @@ import { logActions } from "../../store/user-slice";
 import * as api from "../../requests/API";
 import { User } from "../../shared/utils/interfaces";
 
+import styles from "./Home/Core.module.css";
+
 const Navbar = () => {
   const dispatch = useDispatch();
   const logged = useSelector((state: RootState) => state.user.loggedIn);
@@ -24,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className={`navbar navbar-expand-lg ${styles.navigation_shadow}`}>
       <div className="d-flex">
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">

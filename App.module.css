@@ -1,3 +1,9 @@
 .error {
-    border-color: red;
-  }
+  border-color: red;
+}
+
+body {
+  background-image: url("/src/shared/utils/background.jpg");
+  background-blend-mode: multiply;
+  background-color: rgba(0, 0, 0, 0.3);
+}

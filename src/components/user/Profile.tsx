@@ -7,6 +7,7 @@ import { RoutesEnum } from "../../shared/utils/enums";
 import Error from "../../shared/components/Error";
 import { highlightField } from "../../shared/utils/highlightField";
 import { Modal } from "../../shared/components/Modal";
+import CardLayout from "../../shared/layouts/CardLayout";
 
 const Profile = () => {
   const [user, setUser] = useState({} as User);
@@ -53,13 +54,15 @@ const Profile = () => {
   return (
     <div className="row mt-5">
       <div className="col-md-5 offset-md-3">
+        <CardLayout>
+
         {errors.length > 0 && <Error error={errors} />}
         <Modal
           text={"Are you sure you'd like to keep the changes?"}
           onConfirm={submitHandler}
           cancelButtonText={"Cancel"}
           confirmButtonText={"Save changes"}
-        />
+          />
         <form>
           <div className="mb-3">
             <label htmlFor="emailInput" className="form-label">
@@ -72,7 +75,7 @@ const Profile = () => {
               value={user.email}
               readOnly
               disabled
-            />
+              />
           </div>
           <div className="mb-3">
             <label htmlFor="roleInput" className="form-label">
@@ -85,7 +88,7 @@ const Profile = () => {
               value={user.role}
               readOnly
               disabled
-            />
+              />
           </div>
           <hr></hr>
           <div className="mb-3">
@@ -114,7 +117,7 @@ const Profile = () => {
               onChange={(e) => {
                 editValue("gender", e.target.value);
               }}
-            >
+              >
               <option value="male">male</option>
               <option value="female">female</option>
             </select>
@@ -128,14 +131,14 @@ const Profile = () => {
               className={`form-control ${highlightField(
                 errors,
                 "dateOfBirth"
-              )}`}
-              id="dateOfBirthInput"
-              value={dateParser(user.dateOfBirth)}
-              min={dateParser(minDate)}
-              max={dateParser(new Date(maxDate()))}
-              onChange={(e) => {
-                editValue("dateOfBirth", new Date(e.target.value));
-              }}
+                )}`}
+                id="dateOfBirthInput"
+                value={dateParser(user.dateOfBirth)}
+                min={dateParser(minDate)}
+                max={dateParser(new Date(maxDate()))}
+                onChange={(e) => {
+                  editValue("dateOfBirth", new Date(e.target.value));
+                }}
             />
           </div>
           <div className="mb-3">
@@ -152,18 +155,19 @@ const Profile = () => {
               onChange={(e) => {
                 editValue("height", Number(e.target.value));
               }}
-            />
+              />
           </div>
         </form>
         <button
           type="submit"
-          className="btn btn-outline-dark"
+          className="btn btn-dark"
           disabled={!enableEdit}
           data-bs-toggle="modal"
           data-bs-target="#modal"
-        >
+          >
           Edit
         </button>
+          </CardLayout>
       </div>
     </div>
   );

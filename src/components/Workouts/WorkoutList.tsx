@@ -9,6 +9,7 @@ import WorkoutItem from "./WorkoutItem";
 
 import styles from "./Workout.module.css";
 import { dateParser } from "../../shared/utils/dateFunctions";
+import CardLayout from "../../shared/layouts/CardLayout";
 
 // TODO FIX FITLER
 const WorkoutList = () => {
@@ -35,37 +36,39 @@ const WorkoutList = () => {
   }, []);
 
   return (
-    <div className="container">
-      <div className={styles.searchDiv}>
-        <input
-          type="date"
-          className="form-control mr-1"
-          value={filterDate ? filterDate.toISOString().split("T")[0] : ""}
-          max={dateParser(new Date())}
-          onChange={(e) => setFilterDate(new Date(e.target.value) || "")}
-        ></input>
-        <input
-          type="text"
-          className="form-control mr-1"
-          placeholder="Filter by exercise type"
-        ></input>
-        <input
-          type="text"
-          className="form-control mr-1"
-          placeholder="Filter by muscle group"
-        ></input>
-        <button className="btn btn-warning" onClick={getWorkouts}>
-          Search
-        </button>
-        <button
-          className="btn btn-success"
-          onClick={() => navigate(RoutesEnum.workouts_create)}
-        >
-          Create
-        </button>
+    <CardLayout>
+      <div className="container">
+        <div className={styles.searchDiv}>
+          <input
+            type="date"
+            className="form-control mr-1"
+            value={filterDate ? filterDate.toISOString().split("T")[0] : ""}
+            max={dateParser(new Date())}
+            onChange={(e) => setFilterDate(new Date(e.target.value) || "")}
+          ></input>
+          <input
+            type="text"
+            className="form-control mr-1"
+            placeholder="Filter by exercise type"
+          ></input>
+          <input
+            type="text"
+            className="form-control mr-1"
+            placeholder="Filter by muscle group"
+          ></input>
+          <button className="btn btn-warning" onClick={getWorkouts}>
+            Search
+          </button>
+          <button
+            className="btn btn-success"
+            onClick={() => navigate(RoutesEnum.workouts_create)}
+          >
+            Create
+          </button>
+        </div>
+        <WorkoutItem workout={data} reloadWorkouts={getWorkouts} />
       </div>
-      <WorkoutItem workout={data} reloadWorkouts={getWorkouts} />
-    </div>
+    </CardLayout>
   );
 };
 

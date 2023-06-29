@@ -10,6 +10,7 @@ import { highlightField } from "../../shared/utils/highlightField";
 import Clod from "../../shared/components/Cloudinary";
 
 import styles from "./Measurements.module.css";
+import CardLayout from "../../shared/layouts/CardLayout";
 
 const MeasurementsEdit = () => {
   const { id } = useParams();
@@ -60,7 +61,7 @@ const MeasurementsEdit = () => {
   };
 
   return (
-    <div className="row mt-5">
+    <div>
       <div className="col-md-5 offset-md-3">
         {errors.length > 0 && <Error error={errors} />}
         <Modal
@@ -69,108 +70,110 @@ const MeasurementsEdit = () => {
           cancelButtonText={"Discard"}
           confirmButtonText={"Keep"}
         />
-        <form>
-          <div className={`mb-3 ${styles.centered}`}>{Clod(image)}</div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Weight (kg)
-            </label>
-            <input
-              type="number"
-              className={`form-control ${highlightField(errors, "weight")}`}
-              id="weightInput"
-              value={measurement.weight}
-              onChange={(e) => {
-                editValue("weight", Number(e.target.value));
-              }}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Chest (cm)
-            </label>
-            <input
-              type="number"
-              className={`form-control ${highlightField(errors, "chest")}`}
-              id="chestInput"
-              value={measurement.chest}
-              onChange={(e) => {
-                editValue("chest", Number(e.target.value));
-              }}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Waist (cm)
-            </label>
-            <input
-              type="number"
-              className={`form-control ${highlightField(errors, "waist")}`}
-              id="waistInput"
-              value={measurement.waist}
-              onChange={(e) => {
-                editValue("waist", Number(e.target.value));
-              }}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Hips (cm)
-            </label>
-            <input
-              type="number"
-              className={`form-control ${highlightField(errors, "hips")}`}
-              id="hipsInput"
-              value={measurement.hips}
-              onChange={(e) => {
-                editValue("hips", Number(e.target.value));
-              }}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Biceps (cm)
-            </label>
-            <input
-              type="number"
-              className={`form-control ${highlightField(errors, "biceps")}`}
-              id="bicepsInput"
-              value={measurement.biceps}
-              onChange={(e) => {
-                editValue("biceps", Number(e.target.value));
-              }}
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
-              Date
-            </label>
-            <input
-              type="date"
-              className={`form-control ${highlightField(errors, "date")}`}
-              id="dateInput"
-              value={dateParser(measurement.date)}
-              onChange={(e) => {
-                editValue("date", new Date(e.target.value));
-              }}
-              required
-            />
-          </div>
-        </form>
+        <CardLayout >
+          <form>
+            <div className={`mb-3 ${styles.centered}`}>{Clod(image)}</div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Weight (kg)
+              </label>
+              <input
+                type="number"
+                className={`form-control ${highlightField(errors, "weight")}`}
+                id="weightInput"
+                value={measurement.weight}
+                onChange={(e) => {
+                  editValue("weight", Number(e.target.value));
+                }}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Chest (cm)
+              </label>
+              <input
+                type="number"
+                className={`form-control ${highlightField(errors, "chest")}`}
+                id="chestInput"
+                value={measurement.chest}
+                onChange={(e) => {
+                  editValue("chest", Number(e.target.value));
+                }}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Waist (cm)
+              </label>
+              <input
+                type="number"
+                className={`form-control ${highlightField(errors, "waist")}`}
+                id="waistInput"
+                value={measurement.waist}
+                onChange={(e) => {
+                  editValue("waist", Number(e.target.value));
+                }}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Hips (cm)
+              </label>
+              <input
+                type="number"
+                className={`form-control ${highlightField(errors, "hips")}`}
+                id="hipsInput"
+                value={measurement.hips}
+                onChange={(e) => {
+                  editValue("hips", Number(e.target.value));
+                }}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Biceps (cm)
+              </label>
+              <input
+                type="number"
+                className={`form-control ${highlightField(errors, "biceps")}`}
+                id="bicepsInput"
+                value={measurement.biceps}
+                onChange={(e) => {
+                  editValue("biceps", Number(e.target.value));
+                }}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">
+                Date
+              </label>
+              <input
+                type="date"
+                className={`form-control ${highlightField(errors, "date")}`}
+                id="dateInput"
+                value={dateParser(measurement.date)}
+                onChange={(e) => {
+                  editValue("date", new Date(e.target.value));
+                }}
+                required
+              />
+            </div>
+          </form>
         <button
           type="submit"
           disabled={!enableEdit}
           className="btn btn-outline-dark"
           data-bs-toggle="modal"
           data-bs-target="#modal"
-        >
+          >
           Save
         </button>
+          </CardLayout>
       </div>
     </div>
   );

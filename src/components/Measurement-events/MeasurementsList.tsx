@@ -9,6 +9,7 @@ import { dateParser } from "../../shared/utils/dateFunctions";
 import { Measurement } from "../../shared/utils/interfaces";
 
 import styles from "./Measurements.module.css"
+import CardLayout from "../../shared/layouts/CardLayout";
 
 const Measurements = () => {
   const [data, setData] = useState<Measurement[]>([]);
@@ -45,6 +46,7 @@ const Measurements = () => {
   }, []);
 
   return (
+    <CardLayout>
     <div className="container">
       <h2>Measurements</h2>
       <div className={styles.searchDiv}>
@@ -54,7 +56,7 @@ const Measurements = () => {
           id="dateFrom"
           value={dateFrom ? dateFrom.toISOString().split("T")[0] : ""}
           onChange={(e) => setDateFrom(new Date(e.target.value))}
-        />
+          />
         <input
           className="form-control mr-1"
           type="date"
@@ -62,14 +64,14 @@ const Measurements = () => {
           value={dateTo ? dateTo.toISOString().split("T")[0] : ""}
           onChange={(e) => setDateTo(new Date(e.target.value))}
           max={dateParser(new Date())}
-        />
+          />
         <button className="btn btn-warning" onClick={getMeasurements}>
           Seacrh
         </button>
         <button
           className="btn btn-success"
           onClick={() => navigate(`${RoutesEnum.measurements}/create`)}
-        >
+          >
           Create
         </button>
       </div>
@@ -78,17 +80,18 @@ const Measurements = () => {
           <MeasurementsItem
             measurements={data}
             reloadMeasurements={getMeasurements}
-          />
+            />
           <MeasurementChart
             measurements={data}
             dateFrom={dateFrom}
             dateTo={dateTo}
-          />
+            />
         </>
       ) : (
         <p>No Data</p>
-      )}
+        )}
     </div>
+        </CardLayout>
   );
 };
 
