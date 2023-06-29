@@ -70,7 +70,7 @@ const MeasurementsEdit = () => {
           cancelButtonText={"Discard"}
           confirmButtonText={"Keep"}
         />
-        <CardLayout >
+        <CardLayout>
           <form>
             <div className={`mb-3 ${styles.centered}`}>{Clod(image)}</div>
             <div className="mb-3">
@@ -164,16 +164,16 @@ const MeasurementsEdit = () => {
               />
             </div>
           </form>
-        <button
-          type="submit"
-          disabled={!enableEdit}
-          className="btn btn-outline-dark"
-          data-bs-toggle="modal"
-          data-bs-target="#modal"
+          <button
+            type="submit"
+            disabled={!enableEdit}
+            className="btn btn-outline-dark"
+            data-bs-toggle="modal"
+            data-bs-target="#modal"
           >
-          Save
-        </button>
-          </CardLayout>
+            Save
+          </button>
+        </CardLayout>
       </div>
     </div>
   );

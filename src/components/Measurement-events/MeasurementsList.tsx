@@ -48,7 +48,6 @@ const Measurements = () => {
   return (
     <CardLayout>
     <div className="container">
-      <h2>Measurements</h2>
       <div className={styles.searchDiv}>
         <input
           className="form-control mr-1"

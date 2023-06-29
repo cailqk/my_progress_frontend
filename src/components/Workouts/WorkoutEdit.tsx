@@ -5,6 +5,7 @@ import * as api from "../../requests/API";
 import { dateParser } from "../../shared/utils/dateFunctions";
 import { Modal } from "../../shared/components/Modal";
 import Error from "../../shared/components/Error";
+import CardLayout from "../../shared/layouts/CardLayout";
 
 const WorkoutEdit = () => {
   const { id } = useParams();
@@ -28,36 +29,45 @@ const WorkoutEdit = () => {
         confirmButtonText={"Keep"}
         onConfirm={}
       /> */}
-        <form>
-          <div className="mb-3">
-            <label htmlFor="exercisesInput" className="form-label">
-              Exercises
-            </label>
-            {names.map((el) => (
-              <input type="text" className={`form-control`} value={el}></input>
-            ))}
-          </div>
-          <div className="mb-3">
-            <label htmlFor="dateInput" className="form-label">
-              Date
-            </label>
-            <input
-              type="date"
-              className={`form-control`}
-              id="dateInput"
-              value={dateParser(new Date(date))}
-              required
-            />
-          </div>
-        </form>
-        <button
-          type="submit"
-          className="btn btn-outline-dark"
-          data-bs-toggle="modal"
-          data-bs-target="#modal"
-        >
-          Save
-        </button>
+        <CardLayout>
+          <form>
+            <div className="mb-3">
+              <label htmlFor="exercisesInput" className="form-label">
+                Exercises
+              </label>
+              {names.map((el) => (
+                <>
+                  <label></label>
+                  <input
+                    type="text"
+                    className={`form-control`}
+                    value={el}
+                  ></input>
+                </>
+              ))}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="dateInput" className="form-label">
+                Date
+              </label>
+              <input
+                type="date"
+                className={`form-control`}
+                id="dateInput"
+                value={dateParser(new Date(date))}
+                required
+              />
+            </div>
+          </form>
+          {/* <button
+            type="submit"
+            className="btn btn-outline-dark"
+            data-bs-toggle="modal"
+            data-bs-target="#modal"
+          >
+            Save
+          </button> */}
+        </CardLayout>
       </div>
     </div>
   );

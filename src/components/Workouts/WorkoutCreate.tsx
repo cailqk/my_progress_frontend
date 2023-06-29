@@ -39,15 +39,16 @@ const WorkoutCreate = () => {
 
   const info = exercises.map((ex: Exercise) => {
     return (
-      <li key={ex._id}>
+      <li key={ex._id} style={{marginTop: "10px"}}>
         {`${ex.name} - ${ex.series} series`}
         <button
           className="btn btn-danger btn-sm"
+          style={{ marginLeft: "10px" }}
           onClick={() => {
             removeExercise(ex._id);
           }}
         >
-          X
+          x
         </button>
       </li>
     );

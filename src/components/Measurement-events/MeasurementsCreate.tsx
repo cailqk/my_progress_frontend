@@ -43,10 +43,10 @@ const MeasurementsCreate = () => {
   };
 
   return (
-    <CardLayout>
-      <div className="row mt-5">
-        <div className="col-md-5 offset-md-3">
-          {errors.length > 0 && <Error error={errors} />}
+    <div className="row mt-5">
+      <div className="col-md-5 offset-md-3">
+        {errors.length > 0 && <Error error={errors} />}
+        <CardLayout>
           <form onSubmit={submitHandler}>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
@@ -144,9 +144,9 @@ const MeasurementsCreate = () => {
               Create
             </button>
           </form>
-        </div>
+        </CardLayout>
       </div>
-    </CardLayout>
+    </div>
   );
 };
 

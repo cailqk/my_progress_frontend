@@ -15,6 +15,8 @@ import CardLayout from "../../shared/layouts/CardLayout";
 const WorkoutList = () => {
   const [data, setData] = useState<Workout[]>([]);
   const [filterDate, setFilterDate] = useState<Date>();
+  const [filterExType, setFilterExType] = useState("");
+  const [filterMuscleGroup, setFilterMuscleGroup] = useState("");
   const navigate = useNavigate();
 
   const getWorkouts = () => {
@@ -23,6 +25,18 @@ const WorkoutList = () => {
     if (filterDate) {
       path += `/filter?${new URLSearchParams({
         date: dateParser(filterDate),
+      })}`;
+    }
+
+    if (filterExType) {
+      path += `/filter?${new URLSearchParams({
+        type: filterExType,
+      })}`;
+    }
+
+    if (filterMuscleGroup) {
+      path += `/filter?${new URLSearchParams({
+        group: filterMuscleGroup,
       })}`;
     }
 
@@ -49,11 +63,15 @@ const WorkoutList = () => {
           <input
             type="text"
             className="form-control mr-1"
+            value={filterExType}
+            onChange={(e) => setFilterExType(e.target.value)}
             placeholder="Filter by exercise type"
           ></input>
           <input
             type="text"
             className="form-control mr-1"
+            value={filterMuscleGroup}
+            onChange={(e) => setFilterMuscleGroup(e.target.value)}
             placeholder="Filter by muscle group"
           ></input>
           <button className="btn btn-warning" onClick={getWorkouts}>
