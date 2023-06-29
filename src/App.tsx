@@ -22,6 +22,7 @@ import WorkoutCreate from "./components/Workouts/WorkoutCreate";
 import WorkoutList from "./components/Workouts/WorkoutList";
 import WorkoutEdit from "./components/Workouts/WorkoutEdit";
 import ShowUsers from "./components/Admin/ShowUsers";
+import EditUser from "./components/Admin/EditUser";
 
 const Home = React.lazy(() => import("./components/core/Home/Home"));
 const Login = React.lazy(() => import("./components/Auth/Login"));
@@ -175,6 +176,16 @@ function App() {
               element={
                 <React.Suspense fallback={<Spinner />}>
                   <ShowUsers />
+                </React.Suspense>
+              }
+            />
+          </Route>
+          <Route element={<LoggedOutProtection />}>
+            <Route
+              path={`${RoutesEnum.user_edit}/:id`}
+              element={
+                <React.Suspense fallback={<Spinner />}>
+                  <EditUser />
                 </React.Suspense>
               }
             />
